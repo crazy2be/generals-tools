@@ -1,5 +1,4 @@
-# Resource Override
+# Generals.io card counter
 
-An extension to help you gain full control of any website by redirecting traffic, replacing, editing, or inserting new content.
-
-[Get the extension here](https://chrome.google.com/webstore/detail/resource-override/pkoacgokdfckfpndoffpifphamojphii).
+An extension that counts cards and otherwise helps assist feeble humans at the
+bloodthirsty, hypercompetative generals.io.
