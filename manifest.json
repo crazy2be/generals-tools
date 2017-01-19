@@ -2,33 +2,13 @@
    "background": {
       "page": "src/background/background.html"
    },
-   "browser_action": {
-      "default_icon": {
-         "16": "icons/icon-16x16.png"
-      }
-   },
-   "content_scripts": [ {
-      "all_frames": true,
-      "js": [ "src/inject/scriptInjector.js" ],
-      "matches": [ "*://*/*" ],
-      "run_at": "document_start"
-   } ],
    "web_accessible_resources": [
       "generals-bundle-prod-v11.0.unmin.js"
    ],
-   "description": "An extension to help you gain full control of any website by redirecting traffic, replacing, editing, or inserting new content.",
-   "devtools_page": "src/ui/devtools.html",
-   "icons": {
-      "128": "icons/icon-128x128.png",
-      "16": "icons/icon-16x16.png",
-      "48": "icons/icon-48x48.png"
-   },
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnmApFygTv6KidtHVU5nHk8kIvcVGqz87CHaHTdoF4Ckn2nnRRynViY4zpMEm4BmoSC8MqgxFjfheEIBzDbzVunhINHbYyitMbXDz35RV4djH63wLSAnzCmwysowwxzyHcY6LxX2qUiqUM1zZHuKISIQY3ratzv9sKx10pLKg3/aL9yTz/9etj2bTLiYQaL/9h10+WguoHTt3Bi7AMLk/4b8xfnDUA/zz6ClZf3RJ4oGYbxW3y3QhkHTIbLbm4i5q004ay4H1GrAbyxk3Q9f69QWmJHC/5erh68gZIZ7O4sibvwDueLpKhceu6LxVdV96fr6K2mlt/y6ukw8bW8OpLwIDAQAB",
+   "description": "Counts cards in Generals.io",
    "manifest_version": 2,
    "minimum_chrome_version": "43",
-   "name": "Resource Override",
-   "options_page": "src/ui/devtoolstab.html",
-   "permissions": [ "storage", "webRequest", "webRequestBlocking", "\u003Call_urls>", "tabs" ],
-   "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "1.0.0"
+   "name": "Generals.io Card Counter",
+   "permissions": [ "webRequest", "webRequestBlocking", "http://generals.io/*" ],
+   "version": "0.11.0"
 }
