@@ -14345,6 +14345,32 @@
             });
         },
         renderRow: function(e) {
+			if (!window.armyHistory) window.armyHistory = [];
+			var ah = window.armyHistory[e.i];
+			if (!ah) { ah = window.armyHistory[e.i] = {off: 0, prev: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}; }
+			if (e.total == ah.prev[ah.off]) {
+				console.log("Equal");
+			} else {
+				ah.off = (ah.off + 1) % ah.prev.length;
+				ah.prev[ah.off] = e.total;
+			}
+
+			var diffs = [];
+			for (var iii = 1 /* nb */; iii < ah.prev.length; iii++) {
+				// diffs is one less than ah.prev length
+				diffs[iii - 1] = ah.prev[(iii + ah.off + 1) % ah.prev.length] -
+								 ah.prev[(iii + ah.off) % ah.prev.length];
+			}
+			var mostCommon = [];
+			for (var iii = 0; iii < diffs.length; iii++) {
+				mostCommon[diffs[iii]] = (mostCommon[diffs[iii]] || 0) + 1;
+			}
+			for (var iii = 0; iii < mostCommon.length; iii++) {
+				mostCommon[iii] = mostCommon[iii] || 0;
+			}
+			var generatorGuess = mostCommon.indexOf(Math.max(...mostCommon)) || 1 /* 0 is impossible */;
+			//console.log("Based on diffs:", diffs, "most likely seems", generatorGuess);
+
             var t = this.props.usernames[e.i] || "Anonymous", n = this.props.stars ? this.props.stars[e.i] : "", a = this.props.teams ? this.props.teams[e.i] : void 0;
             return this.state.minimized && (t = " "), r.createElement("tr", {
                 className: 0 === e.tiles ? "dead" : e.dead ? "afk" : "",
@@ -14362,14 +14388,14 @@
                 key: "game-leaderboard-score" + e.i
             }, e.total), r.createElement("td", {
                 key: "game-leaderboard-tiles" + e.i
-            }, e.tiles), r.createElement("td", "test"));
+            }, e.tiles), r.createElement("td", null, '' + generatorGuess));
         },
         render: function() {
             if (this.props.scores) var e = this.props.scores.map(this.renderRow);
             return r.createElement("table", {
                 id: "game-leaderboard",
                 onClick: this.toggleMinimize
-            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land")), e));
+            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land"), r.createElement("td", null, "Gen")), e));
         }
     });
     e.exports = c;
