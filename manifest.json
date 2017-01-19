@@ -1,6 +1,6 @@
 {
    "background": {
-      "page": "src/background/background.html"
+      "scripts": ["script-replacer.js"]
    },
    "web_accessible_resources": [
       "generals-bundle-prod-v11.0.unmin.js"
