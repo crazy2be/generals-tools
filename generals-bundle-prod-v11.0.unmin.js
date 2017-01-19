@@ -13087,7 +13087,7 @@
         },
         CLEAR: {
             desc: "Clear Queued Moves",
-            default: [ 81 ]
+            default: [ 81, 32 ]
         },
         ZOOMIN: {
             desc: "Zoom In",
