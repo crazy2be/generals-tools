@@ -216,10 +216,22 @@
     };
 
     var handleRequest = function(requestUrl, tabUrl, tabId) {
+		if (tabUrl.startsWith("http://generals.io/")) {
+			if (requestUrl == "http://generals.io/generals-bundle-prod-v11.0.js") {
+				return {redirectUrl: chrome.extension.getURL("generals-bundle-prod-v11.0.unmin.js")};
+			}
+		}
+		return;
+		// NOT EXECTUED
         for (var key in ruleDomains) {
             var domainObj = ruleDomains[key];
             if (domainObj.on && match(domainObj.matchUrl, tabUrl).matched) {
-                var rules = domainObj.rules || [];
+				var rules = [{
+						match: "http://generals.io/generals-bundle-prod-v11.0.js",
+						replace: chrome.extension.getURL("http://generals.io/generals-bundle-prod-v11.0.unmin.js"),
+						type: "normalOverride",
+						on: true,
+				}];
                 for (var x = 0, len = rules.length; x < len; ++x) {
                     var ruleObj = rules[x];
                     if (ruleObj.on) {

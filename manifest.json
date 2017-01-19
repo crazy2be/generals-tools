@@ -13,6 +13,9 @@
       "matches": [ "*://*/*" ],
       "run_at": "document_start"
    } ],
+   "web_accessible_resources": [
+      "generals-bundle-prod-v11.0.unmin.js"
+   ],
    "description": "An extension to help you gain full control of any website by redirecting traffic, replacing, editing, or inserting new content.",
    "devtools_page": "src/ui/devtools.html",
    "icons": {
