@@ -14362,7 +14362,7 @@
                 key: "game-leaderboard-score" + e.i
             }, e.total), r.createElement("td", {
                 key: "game-leaderboard-tiles" + e.i
-            }, e.tiles));
+            }, e.tiles), r.createElement("td", "test"));
         },
         render: function() {
             if (this.props.scores) var e = this.props.scores.map(this.renderRow);
