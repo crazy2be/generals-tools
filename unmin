@@ -1,2 +1,5 @@
 #!/bin/bash
+# Command inspired by
+# http://stackoverflow.com/questions/18985/command-line-javascript-code-beautifier-that-works-on-windows-and-linux
+
 uglifyjs $1 --beautify --output $(basename $1 .js).unmin.js
