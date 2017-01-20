@@ -1,0 +1,2 @@
+#!/bin/bash
+uglifyjs $1 --beautify --output $(basename $1 .js).unmin.js
