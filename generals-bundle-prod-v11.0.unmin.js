@@ -14348,8 +14348,9 @@
 			if (!window.armyHistory) window.armyHistory = [];
 			var ah = window.armyHistory[e.i];
 			if (!ah) { ah = window.armyHistory[e.i] = {off: 0, prev: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}; }
-			if (e.total == ah.prev[ah.off]) {
-				console.log("Equal");
+			if (e.total <= ah.prev[ah.off]) {
+				//console.log("Equal");
+				// Ignore drops, they aren't usful for measuring gen capacity.
 			} else {
 				ah.off = (ah.off + 1) % ah.prev.length;
 				ah.prev[ah.off] = e.total;
