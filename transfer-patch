@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# Usage: ./transfer-patch $src $dst
+if [ "$#" -ne 2 ]; then
+	echo "Usage: ./transfer-patch src dst"
+	exit 1
+fi
+
+[ -f "$1" ] || echo "File $1 does not exist!" && exit 1
+[ -f "$2" ] || echo "File $2 does not exist!" && exit 1
 
 src="$(basename "$1" .js)"
 dst="$(basename "$2" .js)"
@@ -11,3 +17,5 @@ cp "$dst".unmin.js "$dst".unmin.patched.js
 diff "$src".unmin.js "$src".unmin.patched.js > tmp.patch
 patch "$dst".unmin.patched.js < tmp.patch
 rm tmp.patch
+# TODO: Is there a better way to not make this file?
+rm "$dst".unmin.patched.js.orig
