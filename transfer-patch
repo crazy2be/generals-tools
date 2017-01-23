@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Usage: ./transfer-patch $src $dst
+
+src="$(basename "$1" .js)"
+dst="$(basename "$2" .js)"
+
+[ -f "$dst".unmin.js ] || ./unmin "$dst".js
+
+cp "$dst".unmin.js "$dst".unmin.patched.js
+diff "$src".unmin.js "$src".unmin.patched.js > tmp.patch
+patch "$dst".unmin.patched.js < tmp.patch
+rm tmp.patch
