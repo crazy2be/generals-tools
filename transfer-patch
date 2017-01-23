@@ -5,17 +5,18 @@ if [ "$#" -ne 2 ]; then
 	exit 1
 fi
 
-[ -f "$1" ] || echo "File $1 does not exist!" && exit 1
-[ -f "$2" ] || echo "File $2 does not exist!" && exit 1
+[ -f "$1" ] || (echo "File $1 does not exist!" && exit 1)
+[ -f "$2" ] || (echo "File $2 does not exist!" && exit 1)
 
 src="$(basename "$1" .js)"
 dst="$(basename "$2" .js)"
 
 [ -f "$dst".unmin.js ] || ./unmin "$dst".js
 
+rm "$dst".unmin.patched.js
 cp "$dst".unmin.js "$dst".unmin.patched.js
-diff "$src".unmin.js "$src".unmin.patched.js > tmp.patch
+diff -c5 "$src".unmin.js "$src".unmin.patched.js > tmp.patch
 patch "$dst".unmin.patched.js < tmp.patch
-rm tmp.patch
+#rm tmp.patch
 # TODO: Is there a better way to not make this file?
 rm "$dst".unmin.patched.js.orig
