@@ -12,18 +12,18 @@ var tileObserver = new MutationObserver(function(mutations) {
 		var props = elt.className.split(' ')
 
 		// give 'mountain' type once a mountain is seen
-		if (props.indexOf('mountain') !== -1) {
+		if (props.includes('mountain')) {
 			elt.type = 'mountain'
 		}
 
 		// once something is a mountain it is permanently a mountain
-		if (props.indexOf('fog') !== -1 && elt.type === 'mountain') {
+		if (props.includes('fog') && elt.type === 'mountain') {
 			elt.className = elt.className.replace(/\bfog\b/,'mountain')
 			elt.className = elt.className.replace(/\bobstacle\b/,'')
 		}
 
 		// draw a white border around seen generals
-		if (props.indexOf('general') !== -1) {
+		if (props.includes('general')) {
 			elt.type = 'general'
 			if (!yourColor) {
 				yourColor = props[0]
@@ -42,16 +42,16 @@ var tileObserver = new MutationObserver(function(mutations) {
 		// }
 
 		// someone's general got taken or died
-		if (props.indexOf('obstacle') !== -1 && elt.type === 'unexplored') {
+		if (props.includes('obstacle') && elt.type === 'unexplored') {
 			elt.type = 'general'
 			elt.style.border = '1px solid white'
 			elt.pastGen = true;
 		}
 
 		// give 'city' type once a city is seen
-		if (props.indexOf('city') !== -1) {
+		if (props.includes('city')) {
 			elt.type = 'city'
-			if (props.indexOf('') === -1) {
+			if (!props.includes('')) {
 				elt.nextBorder = '1px dashed ' + COLORS[props[0]]
 			} else {
 				elt.nextBorder = '1px dashed white'
@@ -60,7 +60,7 @@ var tileObserver = new MutationObserver(function(mutations) {
 
 		// once something is a city it is permanently a city, possibly with affiliation
 		if (elt.type === 'city') {
-			if (props.indexOf('fog') !== -1) {
+			if (props.includes('fog')) {
 				// elt.className = elt.className.replace(/\bfog\b/,'')
 				// elt.className = elt.className.replace(/\bobstacle\b/,'city')
 				elt.style.border = elt.nextBorder;
@@ -73,9 +73,11 @@ var tileObserver = new MutationObserver(function(mutations) {
 			// }
 		}
 
+		// indexOf == -1 => !includes
+		// indexOf != -1 => includes
 		// denote seen area where there are no generals
-		if (props.indexOf('neutral') !== -1 || (props.indexOf('fog') === -1)) {
-			if (props.indexOf('attackable') !== -1) {
+		if (props.includes('neutral') || !props.includes('fog')) {
+			if (props.includes('attackable')) {
 				elt.style.opacity = '0.4'
 			} else {
 				elt.style.opacity = '1'
@@ -107,9 +109,9 @@ var gameObserver = new MutationObserver(function(mutations) {
 
 				for (var i = 0; i < tiles.length; i++) {
 					var props = tiles[i].className.split(' ')
-					if (props.indexOf('obstacle') === -1) {
+					if (!props.includes('obstacle')) {
 						tiles[i].type = 'unexplored'
-						if (props.indexOf('fog') !== -1) {
+						if (props.includes('fog')) {
 							tiles[i].style.opacity = '0.5'
 						}
 					} else {
