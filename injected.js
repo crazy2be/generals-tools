@@ -1,12 +1,16 @@
-(function() {
 console.log("INJECTED SCRIPT RUNNING");
-map = document.getElementById('map')
+
+(function() {
+var map = document.getElementById('map')
 if (map == null) {
 	// Wait until the game starts.
 	window.setTimeout(arguments.callee, 1000);
+	console.log("Waiting for game.");
 	return;
 }
-tiles = map.getElementsByTagName('td')
+
+console.log("Game assist starting...");
+var tiles = map.getElementsByTagName('td')
 
 for (var i = 0; i < tiles.length; i++) {
 	props = tiles[i].className.split(' ')
@@ -21,22 +25,22 @@ for (var i = 0; i < tiles.length; i++) {
 	}
 }
 
-COLORS = {'blue': '#00f', 'red': '#f00', 'yellow': '#ffa500', 'darkgreen': '#004600', 'teal': '#008080', 'purple': '#800080', 'green': '#008000', 'maroon': '#800000'}
+var COLORS = {'blue': '#00f', 'red': '#f00', 'yellow': '#ffa500', 'darkgreen': '#004600', 'teal': '#008080', 'purple': '#800080', 'green': '#008000', 'maroon': '#800000'}
 
-yourColor = null;
+var yourColor = null;
 
-targets = []
-observers = []
-configs = []
+var targets = []
+var observers = []
+var configs = []
 
 for (var i = 0; i < tiles.length; i++) {
-	target = tiles[i]
+	var target = tiles[i]
 
 	// create an observer instance
 	var observer = new MutationObserver(function(mutations) {
 		mutations.forEach(function(mutation) {
-			elt = mutation.target
-			props = elt.className.split(' ')
+			var elt = mutation.target
+			var props = elt.className.split(' ')
 
 			// give 'mountain' type once a mountain is seen
 			if (props.indexOf('mountain') !== -1) {
