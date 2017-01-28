@@ -1,6 +1,11 @@
-
+(function() {
 console.log("INJECTED SCRIPT RUNNING");
 map = document.getElementById('map')
+if (map == null) {
+	// Wait until the game starts.
+	window.setTimeout(arguments.callee, 1000);
+	return;
+}
 tiles = map.getElementsByTagName('td')
 
 for (var i = 0; i < tiles.length; i++) {
@@ -121,3 +126,4 @@ for (var i = 0; i < tiles.length; i++) {
 	configs.push(config)
 	observers.push(observer)
 }
+})();
