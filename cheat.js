@@ -17,7 +17,7 @@ function constructor() {
         }
     }
 
-    var spreadUnits = (async function() {
+    var spreadUnits = (function() {
         var time = +new Date();
 
         var grid = readGrid();
@@ -46,12 +46,6 @@ function constructor() {
     function destructor() {
         document.removeEventListener("keydown", onKeyDown);
     }
-}
-
-function delay(time) {
-    return new Promise(resolve => {
-        setTimeout(resolve, time);
-    });
 }
 
 function isEmpty(element) {
