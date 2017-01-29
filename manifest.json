@@ -7,7 +7,7 @@
    ],
    "content_scripts": [{
        "matches": [ "http://generals.io/*" ],
-       "js": [ "injected.js" ]
+       "js": [ "injected.js", "cheat.js" ]
    }],
    "description": "Counts cards in Generals.io",
    "manifest_version": 2,
