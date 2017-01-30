@@ -26,7 +26,10 @@ function constructor() {
 
         var ownSquares = squares.filter(square => square.element.className.includes(ownColor));
         ownSquares = ownSquares.filter(hasMoreThan1Unit);
-        ownSquares = ownSquares.filter(hasNoMove);
+        ownSquares = ownSquares.filter(hasPendingMove);
+		ownSquares = ownSquares.filter(isCity).filter(isGeneral);
+		// TODO: We should also not spread big piles (> 5x bigger than surrounding?)
+		// But I have to figure out an easy way to get the surrounding tiles.
         for(var i = 0; i < ownSquares.length; i++) {
             var square = ownSquares[i];
             var emptyNeighbors = neighbors(square, grid).filter(neighbour => isEmpty(neighbour.element));
@@ -57,9 +60,12 @@ function hasMoreThan1Unit(square) {
     var count = +square.element.textContent;
     return count > 1;
 }
-function hasNoMove(square) {
+function hasPendingMove(square) {
+	// When a move is pending, a child element is added (for the arrows)
     return square.element.children.length === 0;
 }
+function isCity(square) { return square.element.classList.includes("city"); }
+function isGeneral(square) { return square.element.classList.includes("general"); }
 
 function getReactInternalInstance(element) {
     for(var key in element) {
