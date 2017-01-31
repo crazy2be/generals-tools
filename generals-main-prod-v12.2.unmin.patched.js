@@ -14824,14 +14824,14 @@
                 key: "game-leaderboard-score" + e.i
             }, e.total), r.createElement("td", {
                 key: "game-leaderboard-tiles" + e.i
-            }, e.tiles), r.createElement("td", null, '' + generatorGuess);
+            }, e.tiles), r.createElement("td", null, '' + generatorGuess));
         },
         render: function() {
             if (this.props.scores) var e = this.props.scores.map(this.renderRow);
             return r.createElement("table", {
                 id: "game-leaderboard",
                 onClick: this.toggleMinimize
-            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land"), r.createElement("td", null, "Gen"), e));
+            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land"), r.createElement("td", null, "Gen")), e));
         }
     });
     e.exports = l;
