@@ -64,8 +64,8 @@ function hasPendingMove(square) {
 	// When a move is pending, a child element is added (for the arrows)
     return square.element.children.length === 0;
 }
-function isCity(square) { return square.element.classList.includes("city"); }
-function isGeneral(square) { return square.element.classList.includes("general"); }
+function isCity(square) { return square.element.className.includes("city"); }
+function isGeneral(square) { return square.element.className.includes("general"); }
 
 function getReactInternalInstance(element) {
     for(var key in element) {
