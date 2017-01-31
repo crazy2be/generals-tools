@@ -14437,18 +14437,19 @@
                         selectedIndex: o,
                         selectedIs50: !1
                     };
-                    if (n.isAdjacent(o, this.state.selectedIndex) && o !== this.state.selectedIndex) {
-                        var a = this.state.selectedIndex;
-                        s.attack(a, o, this.state.selectedIs50, this.state.attackIndex);
-                        Object.assign(i, {
-                            queuedAttacks: this.state.queuedAttacks.concat([ {
-                                attackIndex: this.state.attackIndex,
-                                begin: a,
-                                end: o
-                            } ]),
-                            attackIndex: this.state.attackIndex + 1
-                        });
-                    }
+					// DISABLE click to attack, it's annoying and nobody uses it.
+//                     if (n.isAdjacent(o, this.state.selectedIndex) && o !== this.state.selectedIndex) {
+//                         var a = this.state.selectedIndex;
+//                         s.attack(a, o, this.state.selectedIs50, this.state.attackIndex);
+//                         Object.assign(i, {
+//                             queuedAttacks: this.state.queuedAttacks.concat([ {
+//                                 attackIndex: this.state.attackIndex,
+//                                 begin: a,
+//                                 end: o
+//                             } ]),
+//                             attackIndex: this.state.attackIndex + 1
+//                         });
+//                     }
                     this.setState(i);
                 }
             }
