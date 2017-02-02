@@ -56,7 +56,7 @@
 }, function(e, t) {
     "use strict";
     e.exports = {
-        VERSION: "12.2.1",
+        VERSION: "13.0",
         PLAYER_CAP: 8,
         PLAYER_COLORS: [ "red", "blue", "green", "purple", "teal", "darkgreen", "orange", "maroon" ],
         MAX_USERNAME_LENGTH: 18,
@@ -6452,7 +6452,7 @@
     };
 }, function(e, t, n) {
     "use strict";
-    var r = n(4), o = n(180), i = n(210), a = n(211), s = n(212), l = n(291), c = n(2), u = n(178), p = n(301), h = n(273), d = n(302), f = n(304), m = n(292), v = n(266), y = n(278), g = n(305), b = n(307), T = n(310), S = n(311), E = n(313), A = n(321), C = n(322), _ = r.createClass({
+    var r = n(4), o = n(180), i = n(210), a = n(211), s = n(212), l = n(291), c = n(2), u = n(178), p = n(301), h = n(273), d = n(302), f = n(304), m = n(292), v = n(266), y = n(278), g = n(305), b = n(307), T = n(310), S = n(311), E = n(313), A = n(321), C = n(322), _ = n(274), P = r.createClass({
         displayName: "RankItem",
         render: function() {
             return this.props.stars || this.props.rank ? r.createElement("div", {
@@ -6474,7 +6474,7 @@
                 }
             }, "Rank #", this.props.rank || 0) : null) : null;
         }
-    }), P = r.createClass({
+    }), w = r.createClass({
         displayName: "MainMenu",
         getInitialState: function() {
             return {
@@ -6488,7 +6488,7 @@
             var e = this;
             setTimeout(function() {
                 h.doWhenVisible(function() {
-                    y.isPrivateURL() ? this.props.joinPrivateGame.bind(this)(y.getPrivateID()) : y.isReplayURL() ? s.getReplay(y.getReplayID(), m.startReplay) : y.isTeamURL() && this.props.joinTeam.bind(this)(y.getTeamID());
+                    y.isPrivateURL() ? this.props.joinPrivateGame.bind(this)(y.getPrivateID()) : y.isReplayURL() ? this.openReplay(y.getReplayID()) : y.isTeamURL() && this.props.joinTeam.bind(this)(y.getTeamID());
                 }.bind(e));
             }, v.getState().game.playAgainUrl ? 400 : 0);
         },
@@ -6556,26 +6556,28 @@
             var e = void 0, t = v.getState().menu.replays;
             t && t.length > 0 && (e = t[t.length - 1].started - .1), s.getReplayList(e);
         },
+        openReplay: function(e) {
+            _.changeURL("/replays/" + encodeURIComponent(e)), s.getReplay(e, m.startReplay);
+        },
         replayRows: function() {
-            var e = v.getState().menu.replays || [];
-            return e.map(function(e, t) {
-                for (var n = [], o = 0; o < e.ranking.length; o++) {
-                    var i = e.ranking[o];
-                    n.push(r.createElement("span", {
-                        key: "replay-list-p-" + o
-                    }, i.name + " (", r.createElement(p, {
-                        stars: i.stars
-                    }), ")")), n.push(r.createElement("br", {
-                        key: "replay-list-br-" + o
+            var e = this, t = v.getState().menu.replays || [];
+            return t.map(function(t, n) {
+                for (var o = [], i = 0; i < t.ranking.length; i++) {
+                    var a = t.ranking[i];
+                    o.push(r.createElement("span", {
+                        key: "replay-list-p-" + i
+                    }, a.name + " (", r.createElement(p, {
+                        stars: a.stars
+                    }), ")")), o.push(r.createElement("br", {
+                        key: "replay-list-br-" + i
                     }));
                 }
                 return r.createElement("tr", {
-                    key: "replay-row-" + e.id
-                }, r.createElement("td", null, r.createElement("a", {
-                    href: "/replays/" + e.id
-                }, new Date(e.started).toLocaleString())), r.createElement("td", null, e.turns / 2 | 0), r.createElement("td", {
+                    key: "replay-row-" + t.id,
+                    onClick: e.openReplay.bind(e, t.id)
+                }, r.createElement("td", null, new Date(t.started).toLocaleString()), r.createElement("td", null, Math.ceil(t.turns / 2)), r.createElement("td", {
                     className: "replay-col-result"
-                }, n));
+                }, o));
             });
         },
         onPrivateClicked: function() {
@@ -6598,6 +6600,10 @@
 
               case "EU":
                 window.location = "http://eu.generals.io";
+                break;
+
+              case "Bot":
+                window.location = "http://bot.generals.io";
                 break;
 
               default:
@@ -6624,15 +6630,15 @@
                 className: "main-title"
             }, "generals.io"), r.createElement("div", {
                 className: "rank-list"
-            }, r.createElement(_, {
+            }, r.createElement(P, {
                 name: "1v1",
                 stars: this.props.stars ? this.props.stars.duel : void 0,
                 rank: this.props.rank ? this.props.rank.duel : void 0
-            }), r.createElement(_, {
+            }), r.createElement(P, {
                 name: "FFA",
                 stars: this.props.stars ? this.props.stars.ffa : void 0,
                 rank: this.props.rank ? this.props.rank.ffa : void 0
-            }), r.createElement(_, {
+            }), r.createElement(P, {
                 name: "2v2",
                 stars: this.props.stars ? this.props.stars["2v2"] : void 0,
                 rank: this.props.rank ? this.props.rank["2v2"] : void 0
@@ -6653,14 +6659,16 @@
                     border: "none"
                 },
                 onChange: this.onServerChange,
-                value: "eu." === window.location.hostname.substring(0, 3) ? "EU" : "NA"
+                value: "eu." === window.location.hostname.substring(0, 3) ? "EU" : "bot." === window.location.hostname.substring(0, 4) ? "Bot" : "NA"
             }, r.createElement("option", {
                 disabled: !0
             }, "Choose a server:"), r.createElement("option", {
                 value: "NA"
             }, "North America (New York)"), r.createElement("option", {
                 value: "EU"
-            }, "Europe (Amsterdam)")), r.createElement("br", null), r.createElement("button", {
+            }, "Europe (Amsterdam)"), r.createElement("option", {
+                value: "Bot"
+            }, "Bot Server (San Francisco)")), r.createElement("br", null), r.createElement("button", {
                 className: "big",
                 onClick: this.onPlayClicked,
                 style: {
@@ -6718,20 +6726,16 @@
                     left: 0,
                     bottom: 0
                 }
-            }), r.createElement("a", {
-                className: "main-menu-bottom-link",
-                style: {
-                    bottom: "20px"
-                },
+            }), r.createElement("div", {
+                className: "main-menu-bottom-links"
+            }, r.createElement("a", {
+                href: "http://dev.generals.io"
+            }, "Developers"), r.createElement("a", {
                 href: "mailto:generalsiogame@gmail.com"
             }, "Contact Us"), r.createElement("a", {
-                className: "main-menu-bottom-link",
-                style: {
-                    bottom: 0
-                },
                 target: "_blank",
                 href: "/versions"
-            }, "v", c.VERSION, " (Changelog)"), r.createElement("div", {
+            }, "v", c.VERSION, " (Changelog)")), r.createElement("div", {
                 id: "main-menu-leaderboard-ad",
                 className: "center-horizontal",
                 style: {
@@ -6871,7 +6875,7 @@
                 e(a.closeRemovedFrom2v2());
             }
         };
-    })(P);
+    })(w);
 }, function(e, t, n) {
     "use strict";
     function r(e) {
@@ -7569,187 +7573,195 @@
 }, function(e, t, n) {
     "use strict";
     function r() {
-        return q.connected;
+        var e = parseInt(D.games_played) || 0;
+        D.games_played = e + 1;
     }
     function o() {
-        q.emit("stars_and_rank", F);
+        return K.connected;
     }
-    function i(e) {
-        q.emit("set_username", F, e, H.NOT_BOT_KEY);
+    function i() {
+        K.emit("stars_and_rank", V);
     }
-    function a() {
-        q.emit("play", F, H.NOT_BOT_KEY);
+    function a(e) {
+        K.emit("set_username", V, e, U.NOT_BOT_KEY);
     }
     function s() {
-        q.emit("join_1v1", F, H.NOT_BOT_KEY);
+        K.emit("play", V, U.NOT_BOT_KEY);
     }
-    function l(e) {
-        q.emit("join_private", e, F, H.NOT_BOT_KEY);
+    function l() {
+        K.emit("join_1v1", V, U.NOT_BOT_KEY);
     }
-    function c(e, t) {
-        q.emit("set_custom_team", e, t);
+    function c(e) {
+        K.emit("join_private", e, V, U.NOT_BOT_KEY);
     }
-    function u(e, t, n, r) {
-        M.getState().game.isLocalGame ? B.handleAttack(e, t, n, r) : q.emit("attack", e, t, n, r);
+    function u(e, t) {
+        K.emit("set_custom_team", e, t);
     }
-    function p(e) {
-        q.emit("ping_tile", e), M.dispatch(x.cleanPings(e)), M.dispatch(x.pingTile(e));
+    function p(e, t, n, r) {
+        k.getState().game.isLocalGame ? G.handleAttack(e, t, n, r) : K.emit("attack", e, t, n, r);
     }
-    function h() {
-        q.emit("cancel", M.getState().queue.queue_id);
+    function h(e) {
+        K.emit("ping_tile", e), k.dispatch(I.cleanPings(e)), k.dispatch(I.pingTile(e));
     }
-    function d(e) {
-        q.emit("set_force_start", M.getState().queue.queue_id, e);
+    function d() {
+        K.emit("cancel", k.getState().queue.queue_id);
     }
-    function f(e, t, n) {
-        q.emit("chat_message", e, t, n);
+    function f(e) {
+        K.emit("set_force_start", k.getState().queue.queue_id, e);
     }
-    function m(e) {
-        q.emit("leaderboard", e);
+    function m(e, t, n) {
+        K.emit("chat_message", e, t, n);
     }
-    function v() {
-        q.emit("get_2v2_teammates", F);
+    function v(e) {
+        K.emit("leaderboard", e);
     }
     function y() {
-        q.emit("leave_game");
+        K.emit("get_2v2_teammates", V);
     }
     function g() {
-        M.getState().game.isLocalGame ? B.handleUndoMove() : q.emit("undo_move");
+        K.emit("leave_game");
     }
     function b() {
-        M.getState().game.isLocalGame ? B.handleClearMoves() : q.emit("clear_moves");
+        k.getState().game.isLocalGame ? G.handleUndoMove() : K.emit("undo_move");
     }
-    function T(e, t) {
+    function T() {
+        k.getState().game.isLocalGame ? G.handleClearMoves() : K.emit("clear_moves");
+    }
+    function S(e, t) {
         var n = new XMLHttpRequest();
         n.open("GET", "/" + e + ".gior"), n.responseType = "arraybuffer", n.onload = function() {
             t(n.response ? new Uint8Array(n.response) : null);
         }, n.send();
     }
-    function S(e) {
-        q.emit("replay_list", {
-            user_id: F,
+    function E(e) {
+        K.emit("replay_list", {
+            user_id: V,
             max_time: e
         });
     }
-    function E(e) {
-        q.emit("join_team", e, F, H.NOT_BOT_KEY);
-    }
     function A(e) {
-        q.emit("leave_team", e);
+        K.emit("join_team", e, V, U.NOT_BOT_KEY);
     }
-    function C(e, t) {
-        q.emit("link_email", F, e, t);
+    function C(e) {
+        K.emit("leave_team", e);
     }
     function _(e, t) {
-        q.emit("recover_account", e, t);
+        K.emit("link_email", V, e, t);
     }
-    var P, w = n(213), M = n(266), k = n(211), x = n(270), I = n(268), N = n(281), O = n(282), R = n(291), D = n(177), B = n(292), G = n(274), L = n(278), H = n(2), U = L.getQueryParams();
-    U.user_id && (P = U.user_id, console.log("Setting user_id from query param to " + P), 
-    R.user_id = P, delete R.stars, delete R.rank, delete R.GIO_LINKED_EMAIL, U.email && (R.GIO_LINKED_EMAIL = U.email, 
-    console.log("Setting linked email from query param to " + U.email)), G.changeURL("/"));
-    var F;
-    R.user_id ? F = R.user_id : (F = O(), R.user_id = F), console.log("user_id: " + F);
+    function P(e, t) {
+        K.emit("recover_account", e, t);
+    }
+    var w, M = n(213), k = n(266), x = n(211), I = n(270), N = n(268), O = n(281), R = n(282), D = n(291), B = n(177), G = n(292), L = n(274), H = n(278), U = n(2), F = H.getQueryParams();
+    F.user_id && (w = F.user_id, console.log("Setting user_id from query param to " + w), 
+    D.user_id = w, delete D.stars, delete D.rank, delete D.GIO_LINKED_EMAIL, F.email && (D.GIO_LINKED_EMAIL = F.email, 
+    console.log("Setting linked email from query param to " + F.email)), L.changeURL("/"));
+    var V;
+    D.user_id ? V = D.user_id : (V = R(), D.user_id = V), console.log("user_id: " + V);
     try {
-        if (R.hasOwnProperty("stars")) {
-            console.log("cached stars: " + R.stars);
-            var V = JSON.parse(R.stars);
-            M.dispatch(k.stars(V));
+        if (D.hasOwnProperty("stars")) {
+            console.log("cached stars: " + D.stars);
+            var j = JSON.parse(D.stars);
+            k.dispatch(x.stars(j));
         }
-        if (R.hasOwnProperty("rank")) {
-            console.log("cached rank: " + R.rank);
-            var j = JSON.parse(R.rank);
-            M.dispatch(k.rank(j));
+        if (D.hasOwnProperty("rank")) {
+            console.log("cached rank: " + D.rank);
+            var W = JSON.parse(D.rank);
+            k.dispatch(x.rank(W));
         }
     } catch (e) {
-        M.dispatch(k.stars({})), M.dispatch(k.rank({}));
+        k.dispatch(x.stars({})), k.dispatch(x.rank({}));
     }
-    var W = window.location.hostname;
-    switch (W) {
+    var q = window.location.hostname;
+    switch (q) {
       case "localhost":
-        W = "//localhost:8080";
+        q = "//localhost:8080";
         break;
 
       case "generals.io":
-        W = "//ws.generals.io";
+        q = "//ws.generals.io";
         break;
 
       case "eu.generals.io":
-        W = "//euws.generals.io";
+        q = "//euws.generals.io";
+        break;
+
+      case "bot.generals.io":
+        q = "//botws.generals.io";
     }
-    var q = w(W), K = !1;
-    q.on("connect", function() {
-        K ? console.log("Reconnected to server.") : console.log("Connected to server."), 
-        K = !0, o();
-    }), q.on("disconnect", function() {
-        console.log("Disconnected from server."), M.getState().page !== D.PAGE_GAME || M.getState().game.isLocalGame || alert("Disconnected from server. Please refresh the page.");
-    }), q.on("pre_game_start", function() {
-        M.dispatch(x.prestart());
-    }), q.on("game_start", function(e) {
-        M.dispatch(x.start(e));
-    }), q.on("game_update", function(e) {
-        M.dispatch(x.update(e));
-    }), q.on("game_over", function() {
-        M.dispatch(x.end());
-    }), q.on("ping_tile", function(e) {
-        M.dispatch(x.pingTile(e));
-    }), q.on("queue_update", function(e) {
-        M.dispatch(I.update(e));
-    }), q.on("team_update", function(e) {
-        M.dispatch(I.update({
+    var K = M(q), Y = !1;
+    K.on("connect", function() {
+        Y ? console.log("Reconnected to server.") : console.log("Connected to server."), 
+        Y = !0, i();
+    }), K.on("disconnect", function() {
+        console.log("Disconnected from server."), k.getState().page !== B.PAGE_GAME || k.getState().game.isLocalGame || alert("Disconnected from server. Please refresh the page.");
+    }), K.on("pre_game_start", function() {
+        k.dispatch(I.prestart());
+    }), K.on("game_start", function(e) {
+        k.dispatch(I.start(e));
+    }), K.on("game_update", function(e) {
+        k.dispatch(I.update(e));
+    }), K.on("game_over", function() {
+        k.dispatch(I.end());
+    }), K.on("ping_tile", function(e) {
+        k.dispatch(I.pingTile(e));
+    }), K.on("queue_update", function(e) {
+        k.dispatch(N.update(e));
+    }), K.on("team_update", function(e) {
+        k.dispatch(N.update({
             numPlayers: e
         }));
-    }), q.on("team_joined_queue", function() {
-        G.changeURL("/"), M.dispatch(k.play("2v2"));
-    }), q.on("removed_from_queue", function() {
-        M.dispatch(I.removeFrom2v2());
-    }), q.on("chat_message", function(e, t) {
-        M.dispatch(N.receiveMessage(e, t));
-    }), q.on("game_lost", function(e) {
-        M.dispatch(x.lose(e));
-    }), q.on("game_won", function(e) {
-        M.dispatch(x.win(e));
-    }), q.on("replay_list", function(e) {
-        M.dispatch(k.receiveReplayList(e));
-    }), q.on("server_down", function() {
+    }), K.on("team_joined_queue", function() {
+        L.changeURL("/"), k.dispatch(x.play("2v2"));
+    }), K.on("removed_from_queue", function() {
+        k.dispatch(N.removeFrom2v2());
+    }), K.on("chat_message", function(e, t) {
+        k.dispatch(O.receiveMessage(e, t));
+    }), K.on("game_lost", function(e) {
+        r(), k.dispatch(I.lose(e));
+    }), K.on("game_won", function(e) {
+        r(), k.dispatch(I.win(e));
+    }), K.on("replay_list", function(e) {
+        k.dispatch(x.receiveReplayList(e));
+    }), K.on("server_down", function() {
         window.location.reload(!1);
-    }), q.on("leaderboard", function(e) {
-        R["leaderboard:" + e.ladder] = JSON.stringify(e), M.dispatch(k.leaderboard(e));
-    }), q.on("2v2_teammates", function(e) {
-        R["2v2_teammates"] = JSON.stringify(e), M.dispatch(k.set2v2Teammates(e));
-    }), q.on("stars", function(e) {
-        console.log("stars: " + JSON.stringify(e)), M.dispatch(k.stars(e));
-    }), q.on("rank", function(e) {
-        console.log("rank: " + JSON.stringify(e)), M.dispatch(k.rank(e));
-    }), q.on("error_user_id", function() {
-        M.dispatch(I.cancel()), alert("You are already using this account! Make sure you don't have multiple tabs with generals.io open.\n\nIf you believe you are seeing this message in error, please email us at generalsiogame@gmail.com.");
-    }), q.on("error_queue_full", function() {
-        M.dispatch(I.cancel()), alert("This game is already full.");
-    }), q.on("server_restart", function() {
-        M.dispatch(k.notifyServerRestart());
+    }), K.on("leaderboard", function(e) {
+        D["leaderboard:" + e.ladder] = JSON.stringify(e), k.dispatch(x.leaderboard(e));
+    }), K.on("2v2_teammates", function(e) {
+        D["2v2_teammates"] = JSON.stringify(e), k.dispatch(x.set2v2Teammates(e));
+    }), K.on("stars", function(e) {
+        console.log("stars: " + JSON.stringify(e)), k.dispatch(x.stars(e));
+    }), K.on("rank", function(e) {
+        console.log("rank: " + JSON.stringify(e)), k.dispatch(x.rank(e));
+    }), K.on("error_user_id", function() {
+        k.dispatch(N.cancel()), alert("You are already using this account! Make sure you don't have multiple tabs with generals.io open.\n\nIf you believe you are seeing this message in error, please email us at generalsiogame@gmail.com.");
+    }), K.on("error_queue_full", function() {
+        k.dispatch(N.cancel()), alert("This game is already full.");
+    }), K.on("server_restart", function() {
+        k.dispatch(x.notifyServerRestart());
     }), e.exports = {
-        isConnected: r,
-        updateStarsAndRank: o,
-        setUsername: i,
-        play: a,
-        play1v1: s,
-        playPrivate: l,
-        setCustomTeam: c,
-        attack: u,
-        pingTile: p,
-        cancel: h,
-        setForceStart: d,
-        sendChatMessage: f,
-        getLeaderboard: m,
-        get2v2Teammates: v,
-        leaveGame: y,
-        undoMove: g,
-        clearMoves: b,
-        getReplay: T,
-        getReplayList: S,
-        joinTeam: E,
-        leaveTeam: A,
-        linkEmail: C,
-        recoverAccount: _
+        isConnected: o,
+        updateStarsAndRank: i,
+        setUsername: a,
+        play: s,
+        play1v1: l,
+        playPrivate: c,
+        setCustomTeam: u,
+        attack: p,
+        pingTile: h,
+        cancel: d,
+        setForceStart: f,
+        sendChatMessage: m,
+        getLeaderboard: v,
+        get2v2Teammates: y,
+        leaveGame: g,
+        undoMove: b,
+        clearMoves: T,
+        getReplay: S,
+        getReplayList: E,
+        joinTeam: A,
+        leaveTeam: C,
+        linkEmail: _,
+        recoverAccount: P
     };
 }, function(e, t, n) {
     function r(e, t) {
@@ -11068,7 +11080,7 @@
             return 0;
         }), e = 0; e < this.cities.length; e++) for (var t = 0; t < this.generals.length; t++) this.map.distance(this.cities[e], this.generals[t]) <= s.CLOSE_CITY_DISTANCE && n[t]++;
         if (n = n.sort(o), n[0] < 1) return !1;
-        for (var e = 0; e < this.generals.length - 1; e++) if (!this.isReachable(this.generals[e], this.generals[e + 1])) return !1;
+        for (var e = 1; e < this.generals.length; e++) for (var t = 0; t < e; t++) if (!this.isReachable(this.generals[e], this.generals[t])) return !1;
         return !0;
     }, r.prototype.isReachable = function(e, t) {
         var n = this.map;
