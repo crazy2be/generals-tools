@@ -27,7 +27,8 @@ function constructor() {
         var ownSquares = squares.filter(square => square.element.className.includes(ownColor));
         ownSquares = ownSquares.filter(hasMoreThan1Unit);
         ownSquares = ownSquares.filter(hasPendingMove);
-		ownSquares = ownSquares.filter(isCity).filter(isGeneral);
+		var not = f => s => !f(s);
+		ownSquares = ownSquares.filter(not(isCity)).filter(not(isGeneral));
 		// TODO: We should also not spread big piles (> 5x bigger than surrounding?)
 		// But I have to figure out an easy way to get the surrounding tiles.
         for(var i = 0; i < ownSquares.length; i++) {
