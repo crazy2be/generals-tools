@@ -56,7 +56,7 @@
 }, function(e, t) {
     "use strict";
     e.exports = {
-        VERSION: "13.0",
+        VERSION: "13.1.1",
         PLAYER_CAP: 8,
         PLAYER_COLORS: [ "red", "blue", "green", "purple", "teal", "darkgreen", "orange", "maroon" ],
         MAX_USERNAME_LENGTH: 18,
@@ -77,7 +77,7 @@
         PRE_GAME_START_DELAY: 1500,
         MAX_CHAT_MESSAGE_LENGTH: 500,
         NOT_BOT_KEY: "l1IllII1",
-        BOT_TAG: "[Bot] "
+        BOT_TAG: "[Bot]"
     };
 }, function(e, t, n) {
     "use strict";
@@ -6452,7 +6452,7 @@
     };
 }, function(e, t, n) {
     "use strict";
-    var r = n(4), o = n(180), i = n(210), a = n(211), s = n(212), l = n(291), c = n(2), u = n(178), p = n(301), h = n(273), d = n(302), f = n(304), m = n(292), v = n(266), y = n(278), g = n(305), b = n(307), T = n(310), S = n(311), E = n(313), A = n(321), C = n(322), _ = n(274), P = r.createClass({
+    var r = n(4), o = n(180), i = n(210), a = n(211), s = n(212), l = n(272), c = n(2), u = n(178), p = n(301), h = n(274), d = n(302), f = n(304), m = n(292), v = n(266), y = n(279), g = n(305), b = n(307), T = n(310), S = n(311), E = n(313), A = n(321), C = n(322), _ = n(275), P = r.createClass({
         displayName: "RankItem",
         render: function() {
             return this.props.stars || this.props.rank ? r.createElement("div", {
@@ -7651,7 +7651,7 @@
     function P(e, t) {
         K.emit("recover_account", e, t);
     }
-    var w, M = n(213), k = n(266), x = n(211), I = n(270), N = n(268), O = n(281), R = n(282), D = n(291), B = n(177), G = n(292), L = n(274), H = n(278), U = n(2), F = H.getQueryParams();
+    var w, M = n(213), k = n(266), x = n(211), I = n(270), N = n(268), O = n(282), R = n(283), D = n(272), B = n(177), G = n(292), L = n(275), H = n(279), U = n(2), F = H.getQueryParams();
     F.user_id && (w = F.user_id, console.log("Setting user_id from query param to " + w), 
     D.user_id = w, delete D.stars, delete D.rank, delete D.GIO_LINKED_EMAIL, F.email && (D.GIO_LINKED_EMAIL = F.email, 
     console.log("Setting linked email from query param to " + F.email)), L.changeURL("/"));
@@ -10072,7 +10072,7 @@
     };
 }, function(e, t, n) {
     "use strict";
-    var r = n(187), o = n(267), i = n(269), a = n(275), s = n(279), l = n(280), c = r.createStore(r.combineReducers({
+    var r = n(187), o = n(267), i = n(269), a = n(276), s = n(280), l = n(281), c = r.createStore(r.combineReducers({
         menu: o,
         page: i,
         game: a,
@@ -10194,7 +10194,7 @@
         }
         return e;
     }
-    var o = n(211), i = n(268), a = n(270), s = n(177), l = n(274);
+    var o = n(211), i = n(268), a = n(270), s = n(177), l = n(275);
     e.exports = r;
 }, function(e, t, n) {
     "use strict";
@@ -10278,7 +10278,7 @@
             playAgainUrl: e
         };
     }
-    var y = n(271), g = n(272), b = "Game_prestart", T = "Game_start", S = "Game_update", E = "Game_lose", A = "Game_win", C = "Game_exit", _ = "Game_update_tutorialState", P = "Game_toggle_autoPlay", w = "Game_invalid_replay", M = "Game_set_autoPlay_speed", k = "Game_ping", x = "Game_clean_pings", I = "Game_end", N = "Game_play_again";
+    var y = n(271), g = n(273), b = "Game_prestart", T = "Game_start", S = "Game_update", E = "Game_lose", A = "Game_win", C = "Game_exit", _ = "Game_update_tutorialState", P = "Game_toggle_autoPlay", w = "Game_invalid_replay", M = "Game_set_autoPlay_speed", k = "Game_ping", x = "Game_clean_pings", I = "Game_end", N = "Game_play_again";
     e.exports = {
         ACTION_PRESTART: b,
         ACTION_START: T,
@@ -10309,19 +10309,36 @@
         end: m,
         playAgain: v
     };
-}, function(e, t) {
-    "use strict";
-    function n(e) {
-        r[e] && (r[e].currentTime = 0, r[e].play());
-    }
-    var r = {};
-    "undefined" != typeof Audio && (r["gong.mp3"] = new Audio("/gong.mp3"), r["ping.mp3"] = new Audio("/ping.mp3"), 
-    r["ping.mp3"].volume = .5), e.exports = {
-        playSound: n
-    };
 }, function(e, t, n) {
     "use strict";
-    var r = n(273), o = "undefined" != typeof Notification, i = {
+    function r(e) {
+        o() || s[e] && (s[e].currentTime = 0, s[e].play());
+    }
+    function o() {
+        return "true" === a.mute_sound;
+    }
+    function i() {
+        a.mute_sound = !o(), console.log("Sound muted changed to " + o());
+    }
+    var a = n(272), s = {};
+    "undefined" != typeof Audio && (s["gong.mp3"] = new Audio("/gong.mp3"), s["ping.mp3"] = new Audio("/ping.mp3"), 
+    s["ping.mp3"].volume = .5), e.exports = {
+        playSound: r,
+        isMuted: o,
+        toggleMute: i
+    };
+}, function(e, t) {
+    "use strict";
+    e.exports = function() {
+        var e, t, n = Date.now();
+        try {
+            return (e = window.localStorage).setItem(n, n), t = e.getItem(n) == n, e.removeItem(n), 
+            t && e;
+        } catch (e) {}
+    }() || {};
+}, function(e, t, n) {
+    "use strict";
+    var r = n(274), o = "undefined" != typeof Notification, i = {
         request: function(e) {
             (o && "default" === Notification.permission || e && "denied" === Notification.permission) && Notification.requestPermission();
         },
@@ -10479,7 +10496,7 @@
         }
         return e;
     }
-    var o = n(270), i = n(211), a = n(276), s = n(277), l = n(178), c = n(2), u = n(278);
+    var o = n(270), i = n(211), a = n(277), s = n(278), l = n(178), c = n(2), u = n(279);
     e.exports = r;
 }, function(e, t) {
     "use strict";
@@ -10685,7 +10702,7 @@
         }
         return e;
     }
-    var o = n(281), i = n(178);
+    var o = n(282), i = n(178);
     e.exports = r;
 }, function(e, t) {
     "use strict";
@@ -10703,7 +10720,7 @@
     };
 }, function(e, t, n) {
     "use strict";
-    e.exports = n(283);
+    e.exports = n(284);
 }, function(e, t, n) {
     "use strict";
     function r() {
@@ -10720,7 +10737,7 @@
     function a(e) {
         return void 0 !== e && c.characters(e), c.shuffled();
     }
-    var s, l, c = n(284), u = n(286), p = n(288), h = n(289), d = 1459707606518, f = 6, m = n(290) || 0;
+    var s, l, c = n(285), u = n(287), p = n(289), h = n(290), d = 1459707606518, f = 6, m = n(291) || 0;
     e.exports = r, e.exports.generate = r, e.exports.seed = o, e.exports.worker = i, 
     e.exports.characters = a, e.exports.decode = p, e.exports.isValid = h;
 }, function(e, t, n) {
@@ -10758,7 +10775,7 @@
         var t = l();
         return t[e];
     }
-    var u, p, h, d = n(285), f = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
+    var u, p, h, d = n(286), f = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
     e.exports = {
         characters: i,
         seed: a,
@@ -10785,7 +10802,7 @@
         r++;
         return i;
     }
-    var o = n(287);
+    var o = n(288);
     e.exports = r;
 }, function(e, t) {
     "use strict";
@@ -10805,7 +10822,7 @@
             worker: 15 & t.indexOf(e.substr(1, 1))
         };
     }
-    var o = n(284);
+    var o = n(285);
     e.exports = r;
 }, function(e, t, n) {
     "use strict";
@@ -10814,20 +10831,11 @@
         for (var t = o.characters(), n = e.length, r = 0; r < n; r++) if (t.indexOf(e[r]) === -1) return !1;
         return !0;
     }
-    var o = n(284);
+    var o = n(285);
     e.exports = r;
 }, function(e, t) {
     "use strict";
     e.exports = 0;
-}, function(e, t) {
-    "use strict";
-    e.exports = function() {
-        var e, t, n = Date.now();
-        try {
-            return (e = window.localStorage).setItem(n, n), t = e.getItem(n) == n, e.removeItem(n), 
-            t && e;
-        } catch (e) {}
-    }() || {};
 }, function(e, t, n) {
     "use strict";
     function r() {}
@@ -10945,8 +10953,8 @@
     function T() {
         S.clearMoves(S.sockets[0].id);
     }
-    var S, E, A, C, _ = n(293), P = n(294), w = n(266), M = n(270), k = n(291), x = (n(274), 
-    n(278)), I = !1, N = Date.now(), O = Date.now();
+    var S, E, A, C, _ = n(293), P = n(294), w = n(266), M = n(270), k = n(272), x = (n(275), 
+    n(279)), I = !1, N = Date.now(), O = Date.now();
     e.exports = {
         startLocalTutorial: o,
         enableTutorialCityCapture: i,
@@ -10981,7 +10989,7 @@
     function o(e, t) {
         return e - t;
     }
-    var i = n(276), a = n(294), s = n(2), l = n(178), c = n(300), u = -1;
+    var i = n(277), a = n(294), s = n(2), l = n(178), c = n(300), u = -1;
     r.prototype.addMountain = function(e) {
         this.map.setTile(e, i.TILE_MOUNTAIN);
     }, r.prototype.addCity = function(e, t) {
@@ -11325,7 +11333,7 @@
                 turn: e[1]
             };
         }
-        var l = n(276), c = n(299), u = n(282), p = 5, h = {
+        var l = n(277), c = n(299), u = n(283), p = 5, h = {
             REPLAY_VERSION_1: {
                 old_priority: !0
             },
@@ -13074,7 +13082,7 @@
     e.exports = o;
 }, function(e, t, n) {
     "use strict";
-    var r = n(4), o = n(314), i = n(272), a = n(312), s = n(315), l = r.createClass({
+    var r = n(4), o = n(314), i = n(273), a = n(312), s = n(315), l = n(272), c = n(271), u = r.createClass({
         displayName: "Options",
         getInitialState: function() {
             return {
@@ -13087,7 +13095,7 @@
             if (t) {
                 e.preventDefault(), e.stopPropagation();
                 var n = o(t.key);
-                n[t.num] = e.keyCode, o(t.key, n), console.log("Saving", t.key, "as", n), localStorage[t.key] = n, 
+                n[t.num] = e.keyCode, o(t.key, n), console.log("Saving", t.key, "as", n), l[t.key] = n, 
                 this.setState({
                     currentButton: void 0
                 });
@@ -13144,42 +13152,55 @@
             e || i.request(), i.option(e ? "no" : "yes"), this.forceUpdate(), console.log("Notifications changed to", i.option());
         },
         handleMovementPress: function() {
-            var e = "enable" === localStorage.old_movement;
-            localStorage.old_movement = e ? "disable" : "enable", this.forceUpdate(), console.log("Movement changed to", localStorage.old_movement);
+            var e = "enable" === l.old_movement;
+            l.old_movement = e ? "disable" : "enable", this.forceUpdate(), console.log("Movement changed to", l.old_movement);
+        },
+        handleMuteSoundPress: function() {
+            c.toggleMute(), this.forceUpdate();
         },
         renderOther: function() {
-            var e = this.state ? this.state.currentButton : null, t = e && "Notification" === e.key, n = r.createElement("div", {
+            var e = r.createElement("div", {
                 id: "notif-options"
             }, r.createElement("p", null, r.createElement("span", {
                 className: "bold"
             }, "Never miss a game start again:"), " if you enable Notifications, we'll notify you once your game starts if you're in a different tab or window."), r.createElement("div", {
-                className: "options-controls-row",
-                key: "enable_notifications"
+                className: "options-controls-row"
             }, r.createElement("p", {
                 className: "center-vertical"
             }, "Enable Notifications: "), r.createElement("div", {
                 className: "center-vertical"
             }, r.createElement("button", {
                 type: "button",
-                id: "notification-button",
-                className: t ? "small inverted" : "small",
+                className: "small",
                 onClick: this.handleNotificationPress
-            }, "yes" === i.option() ? "Enabled" : "Disabled"))), r.createElement("p", null, r.createElement("span", {
+            }, "yes" === i.option() ? "Enabled" : "Disabled"))), r.createElement("p", {
+                style: {
+                    marginTop: "20px"
+                }
+            }, r.createElement("span", {
                 className: "bold"
-            }, "Miss the old game movement system?"), '  You can enable and disable it here, as well as in-game using the hotkey defined in the "Controls" section (default: [o])'), r.createElement("div", {
-                className: "options-controls-row",
-                key: "enable_old_movement"
+            }, "Miss the old game movement system?"), ' You can enable and disable it here, as well as in-game using the hotkey defined in the "Controls" section (default: [o]).'), r.createElement("div", {
+                className: "options-controls-row"
             }, r.createElement("p", {
                 className: "center-vertical"
             }, "Enable Old Movement System: "), r.createElement("div", {
                 className: "center-vertical"
             }, r.createElement("button", {
                 type: "button",
-                id: "movement-button",
-                className: t ? "small inverted" : "small",
+                className: "small",
                 onClick: this.handleMovementPress
-            }, "enable" === localStorage.old_movement ? "Enabled" : "Disabled"))), "   ");
-            return r.createElement("div", null, n);
+            }, "enable" === l.old_movement ? "Enabled" : "Disabled"))), r.createElement("p", {
+                style: {
+                    marginTop: "20px"
+                }
+            }, r.createElement("span", {
+                className: "bold"
+            }, "Don't want the game's sounds?"), " Mute them here."), r.createElement("button", {
+                type: "button",
+                className: "small",
+                onClick: this.handleMuteSoundPress
+            }, c.isMuted() ? "Muted" : "Sound On"));
+            return r.createElement("div", null, e);
         },
         render: function() {
             return document.querySelector("body").onkeydown = this.handleKeyPress, r.createElement("div", {
@@ -13209,7 +13230,7 @@
             }, "Exit"))));
         }
     });
-    e.exports = l;
+    e.exports = u;
 }, function(e, t, n) {
     "use strict";
     function r(e) {
@@ -13217,7 +13238,7 @@
             return +e;
         }) : void 0;
     }
-    var o = n(291), i = function(e, t) {
+    var o = n(272), i = function(e, t) {
         return Array.isArray(t) && (a[e].current = t), "number" != typeof e && isNaN(e) ? t ? a[e][t] : e ? a[e].current : a : (e = parseInt(e), 
         s[e]);
     }, a = {
@@ -13259,7 +13280,7 @@
         },
         CLEAR: {
             desc: "Clear Queued Moves",
-            default: [ 81 ]
+            default: [ 81, 32 ]
         },
         ZOOMIN: {
             desc: "Zoom In",
@@ -13438,7 +13459,7 @@
     e.exports = i;
 }, function(e, t, n) {
     "use strict";
-    var r = n(4), o = n(212), i = n(291), a = n(316), s = r.createClass({
+    var r = n(4), o = n(212), i = n(272), a = n(316), s = r.createClass({
         displayName: "AccountOptions",
         getInitialState: function() {
             var e;
@@ -13517,7 +13538,7 @@
                 }
             }, "Accounts on generals.io are saved ", r.createElement("span", {
                 className: "bold"
-            }, "in your browser"), ". That means that if you switch browsers or clear your browser data, you'll lose your account."), this.state.linkedEmail ? r.createElement("p", {
+            }, "in your browser per server"), ".", r.createElement("br", null), "That means that if you switch browsers or clear your browser data, you'll lose your account. If you switch servers, you'll be given a new account for that server."), this.state.linkedEmail ? r.createElement("p", {
                 style: e
             }, "Linked Email: ", r.createElement("span", {
                 className: "bold"
@@ -13525,7 +13546,9 @@
                 className: "checkmark-green"
             }, "✓")) : r.createElement("p", null, r.createElement("span", {
                 className: "bold"
-            }, "Linking"), " an email to your account lets you recover your account if you lose your account."), r.createElement("input", {
+            }, "Linking"), " an email to your account lets you recover your account if you lose your account.", r.createElement("br", null), "Note that this links this email to your account ", r.createElement("span", {
+                className: "bold"
+            }, "only on this server"), ". You can link the same email to all of your accounts across all servers."), r.createElement("input", {
                 type: "text",
                 placeholder: "name@example.com",
                 value: this.state.linkEmail,
@@ -13756,7 +13779,7 @@
     e.exports = Date.now || n;
 }, function(e, t, n) {
     "use strict";
-    var r = n(4), o = n(180), i = n(268), a = n(212), s = n(2), l = n(274), c = n(325), u = n(326), p = n(321), h = r.createClass({
+    var r = n(4), o = n(180), i = n(268), a = n(212), s = n(2), l = n(275), c = n(325), u = n(326), p = n(321), h = r.createClass({
         displayName: "Queue",
         componentDidMount: function() {
             this.props.isTeamQueue && l.changeURL("/teams/" + encodeURIComponent(this.props.team_id));
@@ -13845,7 +13868,7 @@
     e.exports = i;
 }, function(e, t, n) {
     "use strict";
-    for (var r = n(4), o = n(180), i = n(268), a = n(325), s = n(212), l = n(2), c = n(178), u = n(274), p = n(328), h = n(312), d = n(326), f = n(314), m = [], v = 0; v < l.PLAYER_CAP; v++) m.push(v + 1);
+    for (var r = n(4), o = n(180), i = n(268), a = n(325), s = n(212), l = n(2), c = n(178), u = n(275), p = n(328), h = n(312), d = n(326), f = n(314), m = [], v = 0; v < l.PLAYER_CAP; v++) m.push(v + 1);
     var y = r.createClass({
         displayName: "CustomQueue",
         componentDidMount: function() {
@@ -14046,7 +14069,7 @@
 }, function(e, t, n) {
     "use strict";
     var r = n(4), o = n(180), i = n(270), a = n(331), s = n(328), l = n(266), c = (n(2), 
-    n(178)), u = n(310), p = n(333).Tutorial, h = n(212), d = n(292), f = n(307), m = (n(274), 
+    n(178)), u = n(310), p = n(333).Tutorial, h = n(212), d = n(292), f = n(307), m = (n(275), 
     n(312)), v = n(334), y = n(321), g = r.createClass({
         displayName: "GamePage",
         getInitialState: function() {
@@ -14325,7 +14348,7 @@
             return "tiny";
         }
     }
-    var o = n(4), i = n(180), a = n(332), s = n(212), l = n(276), c = n(333), u = n(292), p = n(307), h = n(2), d = n(178), f = n(291), m = n(314), v = 3, y = -1, g = 0, b = 1, T = 2, S = 50, E = o.createClass({
+    var o = n(4), i = n(180), a = n(332), s = n(212), l = n(277), c = n(333), u = n(292), p = n(307), h = n(2), d = n(178), f = n(272), m = n(314), v = 3, y = -1, g = 0, b = 1, T = 2, S = 50, E = o.createClass({
         displayName: "GameMap",
         getInitialState: function() {
             return {
@@ -14452,6 +14475,9 @@
                         selectedIndex: o,
                         selectedIs50: !1
                     };
+					// TODO: DISABLE click to attack, it's annoying and nobody uses it.
+					// I thought you could just comment this out, but that turns out to
+					// disable *all* attacking. :/
                     if (n.isAdjacent(o, this.state.selectedIndex) && o !== this.state.selectedIndex) {
                         var a = this.state.selectedIndex;
                         s.attack(a, o, this.state.selectedIs50, this.state.attackIndex);
@@ -14648,7 +14674,7 @@
     }, null)(E);
 }, function(e, t, n) {
     "use strict";
-    var r = n(4), o = n(2), i = n(276), a = r.createClass({
+    var r = n(4), o = n(2), i = n(277), a = r.createClass({
         displayName: "Tile",
         onContextMenu: function(e) {
             return e.preventDefault(), !1;
@@ -14704,7 +14730,7 @@
     e.exports = a;
 }, function(e, t, n) {
     "use strict";
-    var r = n(277), o = n(4), i = n(31), a = n(266), s = n(270), l = n(307), c = n(292), u = o.createClass({
+    var r = n(278), o = n(4), i = n(31), a = n(266), s = n(270), l = n(307), c = n(292), u = o.createClass({
         displayName: "Tutorial",
         moveToState: function(e) {
             a.dispatch(s.updateTutorialState(e));
@@ -14795,6 +14821,33 @@
             });
         },
         renderRow: function(e) {
+			if (!window.armyHistory) window.armyHistory = [];
+			var ah = window.armyHistory[e.i];
+			if (!ah) { ah = window.armyHistory[e.i] = {off: 0, prev: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}; }
+			if (e.total <= ah.prev[ah.off]) {
+				//console.log("Equal");
+				// Ignore drops, they aren't usful for measuring gen capacity.
+			} else {
+				ah.off = (ah.off + 1) % ah.prev.length;
+				ah.prev[ah.off] = e.total;
+			}
+
+			var diffs = [];
+			for (var iii = 1 /* nb */; iii < ah.prev.length; iii++) {
+				// diffs is one less than ah.prev length
+				diffs[iii - 1] = ah.prev[(iii + ah.off + 1) % ah.prev.length] -
+								 ah.prev[(iii + ah.off) % ah.prev.length];
+			}
+			var mostCommon = [];
+			for (var iii = 0; iii < diffs.length; iii++) {
+				mostCommon[diffs[iii]] = (mostCommon[diffs[iii]] || 0) + 1;
+			}
+			for (var iii = 0; iii < mostCommon.length; iii++) {
+				mostCommon[iii] = mostCommon[iii] || 0;
+			}
+			var generatorGuess = mostCommon.indexOf(Math.max(...mostCommon)) || 1 /* 0 is impossible */;
+			//console.log("Based on diffs:", diffs, "most likely seems", generatorGuess);
+
             var t = this.props.usernames[e.i] || "Anonymous", n = this.props.stars ? this.props.stars[e.i] : "", a = this.props.teams ? this.props.teams[e.i] : void 0;
             return this.state.minimized && (t = " "), r.createElement("tr", {
                 className: 0 === e.tiles ? "dead" : e.dead ? "afk" : "",
@@ -14812,14 +14865,14 @@
                 key: "game-leaderboard-score" + e.i
             }, e.total), r.createElement("td", {
                 key: "game-leaderboard-tiles" + e.i
-            }, e.tiles));
+            }, e.tiles), r.createElement("td", null, '' + generatorGuess));
         },
         render: function() {
             if (this.props.scores) var e = this.props.scores.map(this.renderRow);
             return r.createElement("table", {
                 id: "game-leaderboard",
                 onClick: this.toggleMinimize
-            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land")), e));
+            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land"), r.createElement("td", null, "Gen")), e));
         }
     });
     e.exports = l;
