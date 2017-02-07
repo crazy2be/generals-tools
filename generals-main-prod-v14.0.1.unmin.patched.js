@@ -15774,7 +15774,7 @@
                 key: "game-leaderboard-score" + e.i
             }, e.total), r.createElement("td", {
                 key: "game-leaderboard-tiles" + e.i
-            }, e.tiles), r.createElement("td", null, '' + generatorGuess);
+            }, e.tiles), r.createElement("td", null, '' + generatorGuess));
         },
         render: function() {
             if (this.props.scores) var e = this.props.scores.map(this.renderRow);
