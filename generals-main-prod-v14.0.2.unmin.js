@@ -846,7 +846,7 @@
 }, function(e, t) {
     "use strict";
     e.exports = {
-        VERSION: "14.0.1",
+        VERSION: "14.0.2",
         PLAYER_CAP: 8,
         PLAYER_COLORS: [ "red", "blue", "green", "purple", "teal", "darkgreen", "orange", "maroon" ],
         MAX_USERNAME_LENGTH: 18,
@@ -14018,7 +14018,7 @@
         },
         CLEAR: {
             desc: "Clear Queued Moves",
-            default: [ 81, 32 ]
+            default: [ 81 ]
         },
         ZOOMIN: {
             desc: "Zoom In",
@@ -15184,9 +15184,9 @@
                 className: "fixed-center-horizontal"
             }, r.createElement("center", null, this.props.autoPlay ? r.createElement(m, {
                 tab_id: "replay-autoplay",
-                selectedTab: .5 === this.props.autoPlaySpeed ? 0 : 1 === this.props.autoPlaySpeed ? 1 : 2 === this.props.autoPlaySpeed ? 2 : 5 === this.props.autoPlaySpeed ? 3 : 10 == this.props.autoPlaySpeed ? 4 : 5,
-                onClicks: [ this.setAutoPlaySpeed.bind(null, .5), this.setAutoPlaySpeed.bind(null, 1), this.setAutoPlaySpeed.bind(null, 2), this.setAutoPlaySpeed.bind(null, 5), this.setAutoPlaySpeed.bind(null, 10), this.setAutoPlaySpeed.bind(null, 50) ],
-                titles: [ "0.5x", "1x", "2x", "5x", "10x", "50x" ]
+                selectedTab: .5 === this.props.autoPlaySpeed ? 0 : 1 === this.props.autoPlaySpeed ? 1 : 2 === this.props.autoPlaySpeed ? 2 : 5 === this.props.autoPlaySpeed ? 3 : 4,
+                onClicks: [ this.setAutoPlaySpeed.bind(null, .5), this.setAutoPlaySpeed.bind(null, 1), this.setAutoPlaySpeed.bind(null, 2), this.setAutoPlaySpeed.bind(null, 5), this.setAutoPlaySpeed.bind(null, 10) ],
+                titles: [ "0.5x", "1x", "2x", "5x", "10x" ]
             }) : null, this.props.autoPlay && !f ? r.createElement("br", null) : null, f ? null : r.createElement("div", {
                 id: "replay-bottom-bar",
                 className: "background"
@@ -15368,9 +15368,6 @@
                         selectedIndex: o,
                         selectedIs50: !1
                     };
-					// TODO: DISABLE click to attack, it's annoying and nobody uses it.
-					// I thought you could just comment this out, but that turns out to
-					// disable *all* attacking. :/
                     if (n.isAdjacent(o, this.state.selectedIndex) && o !== this.state.selectedIndex) {
                         var a = this.state.selectedIndex;
                         s.attack(a, o, this.state.selectedIs50, this.state.attackIndex);
@@ -15730,33 +15727,6 @@
             });
         },
         renderRow: function(e) {
-			if (!window.armyHistory) window.armyHistory = [];
-			var ah = window.armyHistory[e.i];
-			if (!ah) { ah = window.armyHistory[e.i] = {off: 0, prev: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}; }
-			if (e.total <= ah.prev[ah.off]) {
-				//console.log("Equal");
-				// Ignore drops, they aren't usful for measuring gen capacity.
-			} else {
-				ah.off = (ah.off + 1) % ah.prev.length;
-				ah.prev[ah.off] = e.total;
-			}
-
-			var diffs = [];
-			for (var iii = 1 /* nb */; iii < ah.prev.length; iii++) {
-				// diffs is one less than ah.prev length
-				diffs[iii - 1] = ah.prev[(iii + ah.off + 1) % ah.prev.length] -
-								 ah.prev[(iii + ah.off) % ah.prev.length];
-			}
-			var mostCommon = [];
-			for (var iii = 0; iii < diffs.length; iii++) {
-				mostCommon[diffs[iii]] = (mostCommon[diffs[iii]] || 0) + 1;
-			}
-			for (var iii = 0; iii < mostCommon.length; iii++) {
-				mostCommon[iii] = mostCommon[iii] || 0;
-			}
-			var generatorGuess = mostCommon.indexOf(Math.max(...mostCommon)) || 1 /* 0 is impossible */;
-			//console.log("Based on diffs:", diffs, "most likely seems", generatorGuess);
-
             var t = this.props.usernames[e.i] || "Anonymous", n = this.props.stars ? this.props.stars[e.i] : "", a = this.props.teams ? this.props.teams[e.i] : void 0;
             return this.state.minimized && (t = " "), r.createElement("tr", {
                 className: 0 === e.tiles ? "dead" : e.dead ? "afk" : "",
@@ -15774,14 +15744,14 @@
                 key: "game-leaderboard-score" + e.i
             }, e.total), r.createElement("td", {
                 key: "game-leaderboard-tiles" + e.i
-            }, e.tiles), r.createElement("td", null, '' + generatorGuess));
+            }, e.tiles));
         },
         render: function() {
             if (this.props.scores) var e = this.props.scores.map(this.renderRow);
             return r.createElement("table", {
                 id: "game-leaderboard",
                 onClick: this.toggleMinimize
-            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land"), r.createElement("td", null, "Gen")), e));
+            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land")), e));
         }
     });
     e.exports = u;
