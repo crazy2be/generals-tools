@@ -846,7 +846,7 @@
 }, function(e, t) {
     "use strict";
     e.exports = {
-        VERSION: "14.0.2",
+        VERSION: "14.0.3",
         PLAYER_CAP: 8,
         PLAYER_COLORS: [ "red", "blue", "green", "purple", "teal", "darkgreen", "orange", "maroon" ],
         MAX_USERNAME_LENGTH: 18,
@@ -874,7 +874,7 @@
     };
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(46), i = n(191), a = n(192), s = n(193), u = n(337), l = n(340), c = n(344), p = n(349), h = r.createClass({
+    var r = n(19), o = n(46), i = n(191), a = n(192), s = n(193), u = n(341), l = n(344), c = n(348), p = n(353), h = r.createClass({
         displayName: "App",
         render: function() {
             var e = this.props.state, t = null;
@@ -1023,7 +1023,7 @@
         toArray: d
     };
     e.exports = E;
-}, [ 350, 24 ], function(e, t) {
+}, [ 354, 24 ], function(e, t) {
     "use strict";
     function n(e) {
         for (var t = arguments.length - 1, n = "Minified React error #" + e + "; visit http://facebook.github.io/react/docs/error-decoder.html?invariant=" + e, r = 0; r < t; r++) n += "&args[]=" + encodeURIComponent(arguments[r + 1]);
@@ -2651,7 +2651,7 @@
             return this._fallbackText = o.slice(e, s), this._fallbackText;
         }
     }), i.addPoolingTo(r), e.exports = r;
-}, [ 350, 52 ], function(e, t, n) {
+}, [ 354, 52 ], function(e, t, n) {
     "use strict";
     function r() {
         return !i && o.canUseDOM && (i = "textContent" in document.documentElement ? "textContent" : "innerText"), 
@@ -7125,7 +7125,10 @@
     };
 }, function(e, t, n) {
     "use strict";
-    var r = "__2v2__";
+    function r(e) {
+        return e < 1 ? 0 : Math.round(100 * (1 + 1 / Math.pow(e, .33))) / 100;
+    }
+    var o = "__2v2__";
     e.exports = {
         isCustomGame: function(e) {
             return e && "1v1" !== e && "2v2" !== e && "main" !== e;
@@ -7149,21 +7152,26 @@
             if (!(t < 0)) return e.substring(0, t);
         },
         idFor2v2Team: function(e, t) {
-            return e < t ? e + r + t : t + r + e;
+            return e < t ? e + o + t : t + o + e;
         },
         userIdsFrom2v2Id: function(e) {
-            var t = e.indexOf(r);
-            if (!(t < 0)) return [ e.substring(0, t), e.substring(t + r.length) ];
+            var t = e.indexOf(o);
+            if (!(t < 0)) return [ e.substring(0, t), e.substring(t + o.length) ];
         },
         accountRecoveryLink: function(e, t) {
             return {
                 NODE_ENV: "production"
             }.GIO_BASE_URL + "/?user_id=" + encodeURIComponent(e) + "&email=" + encodeURIComponent(t);
+        },
+        supporterPricePerMonth: r,
+        supporterMonthsFromCost: function(e) {
+            for (var t = 0; e >= t * r(t); ) t++;
+            return Math.max(0, t - 1);
         }
     };
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(194), i = n(223), a = n(224), s = n(225), u = n(285), l = n(17), c = n(192), p = n(314), h = n(287), d = n(315), f = n(317), m = n(305), v = n(279), g = n(292), y = n(318), b = n(320), T = n(323), E = n(324), S = n(326), A = n(334), C = n(335), _ = n(288), P = r.createClass({
+    var r = n(19), o = n(194), i = n(223), a = n(224), s = n(225), u = n(285), l = n(17), c = n(192), p = n(317), h = n(287), d = n(318), f = n(320), m = n(298), v = n(279), g = n(292), y = n(321), b = n(323), T = n(326), E = n(327), S = n(330), A = n(338), C = n(339), _ = n(288), P = n(329), w = r.createClass({
         displayName: "RankItem",
         render: function() {
             return this.props.stars || this.props.rank ? r.createElement("div", {
@@ -7185,7 +7193,7 @@
                 }
             }, "Rank #", this.props.rank || 0) : null) : null;
         }
-    }), w = r.createClass({
+    }), M = r.createClass({
         displayName: "MainMenu",
         getInitialState: function() {
             return {
@@ -7199,7 +7207,7 @@
             var e = this;
             setTimeout(function() {
                 h.doWhenVisible(function() {
-                    g.isPrivateURL() ? this.props.joinPrivateGame.bind(this)(g.getPrivateID()) : g.isReplayURL() ? this.openReplay(g.getReplayID()) : g.isTeamURL() && this.props.joinTeam.bind(this)(g.getTeamID());
+                    g.isPrivateURL() ? this.props.joinPrivateGame.bind(this)(g.getPrivateID()) : g.isReplayURL() ? s.getReplay(g.getReplayID(), m.startReplay) : g.isTeamURL() && this.props.joinTeam.bind(this)(g.getTeamID());
                 }.bind(e));
             }, v.getState().game.playAgainUrl ? 400 : 0);
         },
@@ -7341,15 +7349,15 @@
                 className: "main-title"
             }, "generals.io"), r.createElement("div", {
                 className: "rank-list"
-            }, r.createElement(P, {
+            }, r.createElement(w, {
                 name: "1v1",
                 stars: this.props.stars ? this.props.stars.duel : void 0,
                 rank: this.props.rank ? this.props.rank.duel : void 0
-            }), r.createElement(P, {
+            }), r.createElement(w, {
                 name: "FFA",
                 stars: this.props.stars ? this.props.stars.ffa : void 0,
                 rank: this.props.rank ? this.props.rank.ffa : void 0
-            }), r.createElement(P, {
+            }), r.createElement(w, {
                 name: "2v2",
                 stars: this.props.stars ? this.props.stars["2v2"] : void 0,
                 rank: this.props.rank ? this.props.rank["2v2"] : void 0
@@ -7446,7 +7454,13 @@
             }, "Contact Us"), r.createElement("a", {
                 target: "_blank",
                 href: "/versions"
-            }, "v", l.VERSION, " (Changelog)")), r.createElement("div", {
+            }, "v", l.VERSION, " (Changelog)")), this.props.is_supporter ? r.createElement("div", {
+                style: {
+                    bottom: 0,
+                    margin: "5px"
+                },
+                className: "center-horizontal"
+            }, r.createElement(P, null)) : r.createElement("div", {
                 id: "main-menu-leaderboard-ad",
                 className: "center-horizontal",
                 style: {
@@ -7566,7 +7580,9 @@
         }
     });
     e.exports = o.connect(function(e) {
-        return e.menu;
+        return Object.assign({
+            is_supporter: e.account.is_supporter
+        }, e.menu);
     }, function(e) {
         return {
             onPlayFFA: function() {
@@ -7586,7 +7602,7 @@
                 e(a.closeRemovedFrom2v2());
             }
         };
-    })(w);
+    })(M);
 }, function(e, t, n) {
     "use strict";
     function r(e) {
@@ -8279,62 +8295,62 @@
 }, function(e, t, n) {
     "use strict";
     function r() {
-        var e = parseInt(B.games_played) || 0;
-        B.games_played = e + 1;
+        var e = parseInt(D.games_played) || 0;
+        D.games_played = e + 1;
     }
     function o() {
-        return X.connected;
+        return K.connected;
     }
     function i() {
-        X.emit("stars_and_rank", V);
+        K.emit("stars_and_rank", U);
     }
     function a(e) {
-        X.emit("set_username", V, e, F.NOT_BOT_KEY);
+        K.emit("set_username", U, e, H.NOT_BOT_KEY);
     }
     function s() {
-        X.emit("play", V, F.NOT_BOT_KEY);
+        K.emit("play", U, H.NOT_BOT_KEY);
     }
     function u() {
-        X.emit("join_1v1", V, F.NOT_BOT_KEY);
+        K.emit("join_1v1", U, H.NOT_BOT_KEY);
     }
     function l(e) {
-        X.emit("join_private", e, V, F.NOT_BOT_KEY);
+        K.emit("join_private", e, U, H.NOT_BOT_KEY);
     }
     function c(e, t) {
-        X.emit("set_custom_team", e, t);
+        K.emit("set_custom_team", e, t);
     }
     function p(e, t) {
-        X.emit("set_custom_options", e, t);
+        K.emit("set_custom_options", e, t);
     }
     function h(e, t, n, r) {
-        x.getState().game.isLocalGame ? G.handleAttack(e, t, n, r) : X.emit("attack", e, t, n, r);
+        k.getState().game.isLocalGame ? L.handleAttack(e, t, n, r) : K.emit("attack", e, t, n, r);
     }
     function d(e) {
-        X.emit("ping_tile", e), x.dispatch(I.cleanPings(e)), x.dispatch(I.pingTile(e));
+        K.emit("ping_tile", e), k.dispatch(N.cleanPings(e)), k.dispatch(N.pingTile(e));
     }
     function f() {
-        X.emit("cancel", x.getState().queue.queue_id);
+        K.emit("cancel", k.getState().queue.queue_id);
     }
     function m(e) {
-        X.emit("set_force_start", x.getState().queue.queue_id, e);
+        K.emit("set_force_start", k.getState().queue.queue_id, e);
     }
     function v(e, t, n) {
-        X.emit("chat_message", e, t, n);
+        K.emit("chat_message", e, t, n);
     }
     function g(e) {
-        X.emit("leaderboard", e);
+        K.emit("leaderboard", e);
     }
     function y() {
-        X.emit("get_2v2_teammates", V);
+        K.emit("get_2v2_teammates", U);
     }
     function b() {
-        X.emit("leave_game");
+        K.emit("leave_game");
     }
     function T() {
-        x.getState().game.isLocalGame ? G.handleUndoMove() : X.emit("undo_move");
+        k.getState().game.isLocalGame ? L.handleUndoMove() : K.emit("undo_move");
     }
     function E() {
-        x.getState().game.isLocalGame ? G.handleClearMoves() : X.emit("clear_moves");
+        k.getState().game.isLocalGame ? L.handleClearMoves() : K.emit("clear_moves");
     }
     function S(e, t) {
         var n = new XMLHttpRequest();
@@ -8343,113 +8359,112 @@
         }, n.send();
     }
     function A(e) {
-        X.emit("replay_list", {
-            user_id: V,
+        K.emit("replay_list", {
+            user_id: U,
             max_time: e
         });
     }
     function C(e) {
-        X.emit("join_team", e, V, F.NOT_BOT_KEY);
+        K.emit("join_team", e, U, H.NOT_BOT_KEY);
     }
     function _(e) {
-        X.emit("leave_team", e);
+        K.emit("leave_team", e);
     }
     function P(e, t) {
-        X.emit("link_email", V, e, t);
+        K.emit("link_email", U, e, t);
     }
     function w(e, t) {
-        X.emit("recover_account", e, t);
+        K.emit("recover_account", e, t);
     }
-    var M, k = n(226), x = n(279), N = n(224), I = n(283), O = n(281), R = n(295), D = n(296), B = n(285), L = n(191), G = n(305), H = n(288), U = n(292), F = n(17), j = U.getQueryParams();
-    j.user_id && (M = j.user_id, logger.log("Setting user_id from query param to " + M), 
-    B.user_id = M, delete B.stars, delete B.rank, delete B.GIO_LINKED_EMAIL, j.email && (B.GIO_LINKED_EMAIL = j.email, 
-    logger.log("Setting linked email from query param to " + j.email)), H.changeURL("/"));
-    var V;
-    B.user_id ? V = B.user_id : (V = D(), B.user_id = V), logger.log("WARNING: Do not share your user_id with anyone.  It can be used to impersonate you."), 
-    logger.log("user_id: " + V);
+    var M = n(226), k = n(279), x = n(224), N = n(283), I = n(281), O = n(295), R = n(297), D = n(285), B = n(191), L = n(298), G = n(288), H = n(17), U = n(316);
     try {
-        if (B.hasOwnProperty("stars")) {
+        if (D.hasOwnProperty("stars")) {
             console.group("Found Cached Stars");
-            for (var W = JSON.parse(B.stars), q = Object.keys(W), K = 0; K < q.length; K++) logger.log(q[K] + ": " + W[q[K]]);
-            console.groupEnd(), x.dispatch(N.stars(W));
+            for (var F = JSON.parse(D.stars), j = Object.keys(F), V = 0; V < j.length; V++) logger.log(j[V] + ": " + F[j[V]]);
+            console.groupEnd(), k.dispatch(x.stars(F));
         }
-        if (B.hasOwnProperty("rank")) {
+        if (D.hasOwnProperty("rank")) {
             console.group("Found Cached Rank");
-            for (var Y = JSON.parse(B.rank), q = Object.keys(Y), K = 0; K < q.length; K++) logger.log(q[K] + ": " + Y[q[K]]);
-            console.groupEnd(), x.dispatch(N.rank(Y));
+            for (var W = JSON.parse(D.rank), j = Object.keys(W), V = 0; V < j.length; V++) logger.log(j[V] + ": " + W[j[V]]);
+            console.groupEnd(), k.dispatch(x.rank(W));
         }
     } catch (e) {
-        x.dispatch(N.stars({})), x.dispatch(N.rank({}));
+        k.dispatch(x.stars({})), k.dispatch(x.rank({}));
     }
-    var z = window.location.hostname;
-    switch (z) {
+    var q = window.location.hostname;
+    switch (q) {
       case "localhost":
-        z = "//localhost:8080";
+        q = "//localhost:8080";
         break;
 
       case "generals.io":
-        z = "//ws.generals.io";
+        q = "//ws.generals.io";
         break;
 
       case "eu.generals.io":
-        z = "//euws.generals.io";
+        q = "//euws.generals.io";
         break;
 
       case "bot.generals.io":
-        z = "//botws.generals.io";
+        q = "//botws.generals.io";
     }
-    var X = k(z), Q = !1;
-    X.on("connect", function() {
-        Q ? logger.log("Reconnected to websocket server.") : logger.log("Connected to websocket server."), 
-        Q = !0, i();
-    }), X.on("disconnect", function() {
-        logger.log("Disconnected from server."), x.getState().page !== L.PAGE_GAME || x.getState().game.isLocalGame || alert("Disconnected from server. Please refresh the page.");
-    }), X.on("pre_game_start", function() {
-        x.dispatch(I.prestart());
-    }), X.on("game_start", function(e) {
-        x.dispatch(I.start(e));
-    }), X.on("game_update", function(e) {
-        x.dispatch(I.update(e));
-    }), X.on("game_over", function() {
-        x.dispatch(I.end());
-    }), X.on("ping_tile", function(e) {
-        x.dispatch(I.pingTile(e));
-    }), X.on("queue_update", function(e) {
-        x.dispatch(O.update(e));
-    }), X.on("team_update", function(e) {
-        x.dispatch(O.update({
+    var K = M(q), Y = !1;
+    K.on("connect", function() {
+        return Y ? void logger.log("Reconnected to websocket server.") : (logger.log("Connected to websocket server."), 
+        Y = !0, i(), void K.emit("is_supporter", U, function(e) {
+            if (logger.log("Player is supporter: " + e), k.dispatch(R.setIsSupporter(e)), !e) {
+                var t = document.createElement("script");
+                t.src = "https://www.googletagservices.com/tag/js/gpt.js", t.async = "async", document.head.appendChild(t);
+            }
+        }));
+    }), K.on("disconnect", function() {
+        logger.log("Disconnected from server."), k.getState().page !== B.PAGE_GAME || k.getState().game.isLocalGame || alert("Disconnected from server. Please refresh the page.");
+    }), K.on("pre_game_start", function() {
+        k.dispatch(N.prestart());
+    }), K.on("game_start", function(e) {
+        k.dispatch(N.start(e));
+    }), K.on("game_update", function(e) {
+        k.dispatch(N.update(e));
+    }), K.on("game_over", function() {
+        k.dispatch(N.end());
+    }), K.on("ping_tile", function(e) {
+        k.dispatch(N.pingTile(e));
+    }), K.on("queue_update", function(e) {
+        k.dispatch(I.update(e));
+    }), K.on("team_update", function(e) {
+        k.dispatch(I.update({
             numPlayers: e
         }));
-    }), X.on("team_joined_queue", function() {
-        H.changeURL("/"), x.dispatch(N.play("2v2"));
-    }), X.on("removed_from_queue", function() {
-        x.dispatch(O.removeFrom2v2());
-    }), X.on("chat_message", function(e, t) {
-        x.dispatch(R.receiveMessage(e, t));
-    }), X.on("game_lost", function(e) {
-        r(), x.dispatch(I.lose(e));
-    }), X.on("game_won", function(e) {
-        r(), x.dispatch(I.win(e));
-    }), X.on("replay_list", function(e) {
-        x.dispatch(N.receiveReplayList(e));
-    }), X.on("server_down", function() {
+    }), K.on("team_joined_queue", function() {
+        G.changeURL("/"), k.dispatch(x.play("2v2"));
+    }), K.on("removed_from_queue", function() {
+        k.dispatch(I.removeFrom2v2());
+    }), K.on("chat_message", function(e, t) {
+        k.dispatch(O.receiveMessage(e, t));
+    }), K.on("game_lost", function(e) {
+        r(), k.dispatch(N.lose(e));
+    }), K.on("game_won", function(e) {
+        r(), k.dispatch(N.win(e));
+    }), K.on("replay_list", function(e) {
+        k.dispatch(x.receiveReplayList(e));
+    }), K.on("server_down", function() {
         window.location.reload(!1);
-    }), X.on("leaderboard", function(e) {
-        B["leaderboard:" + e.ladder] = JSON.stringify(e), x.dispatch(N.leaderboard(e));
-    }), X.on("2v2_teammates", function(e) {
-        B["2v2_teammates"] = JSON.stringify(e), x.dispatch(N.set2v2Teammates(e));
-    }), X.on("stars", function(e) {
+    }), K.on("leaderboard", function(e) {
+        D["leaderboard:" + e.ladder] = JSON.stringify(e), k.dispatch(x.leaderboard(e));
+    }), K.on("2v2_teammates", function(e) {
+        D["2v2_teammates"] = JSON.stringify(e), k.dispatch(x.set2v2Teammates(e));
+    }), K.on("stars", function(e) {
         logger.log('Updated stars on ladder "' + Object.keys(e)[0] + '" to ' + e[Object.keys(e)[0]]), 
-        x.dispatch(N.stars(e));
-    }), X.on("rank", function(e) {
+        k.dispatch(x.stars(e));
+    }), K.on("rank", function(e) {
         logger.log('Updated rank on ladder "' + Object.keys(e)[0] + '" to ' + e[Object.keys(e)[0]]), 
-        x.dispatch(N.rank(e));
-    }), X.on("error_user_id", function() {
-        x.dispatch(O.cancel()), alert("You are already using this account! Make sure you don't have multiple tabs with generals.io open.\n\nIf you believe you are seeing this message in error, please email us at generalsiogame@gmail.com.");
-    }), X.on("error_queue_full", function() {
-        x.dispatch(O.cancel()), alert("This game is already full.");
-    }), X.on("server_restart", function() {
-        x.dispatch(N.notifyServerRestart());
+        k.dispatch(x.rank(e));
+    }), K.on("error_user_id", function() {
+        k.dispatch(I.cancel()), alert("You are already using this account! Make sure you don't have multiple tabs with generals.io open.\n\nIf you believe you are seeing this message in error, please email us at generalsiogame@gmail.com.");
+    }), K.on("error_queue_full", function() {
+        k.dispatch(I.cancel()), alert("This game is already full.");
+    }), K.on("server_restart", function() {
+        k.dispatch(x.notifyServerRestart());
     }), e.exports = {
         isConnected: o,
         updateStarsAndRank: i,
@@ -8520,7 +8535,7 @@
         s.authority = s.authority.replace("[", "").replace("]", "").replace(/;/g, ":"), 
         s.ipv6uri = !0), s;
     };
-}, [ 351, 230 ], [ 352, 231 ], function(e, t) {
+}, [ 355, 230 ], [ 356, 231 ], function(e, t) {
     function n(e) {
         if (e = String(e), !(e.length > 1e4)) {
             var t = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(e);
@@ -10414,7 +10429,7 @@
     }
     for (var i, a = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split(""), s = 64, u = {}, l = 0, c = 0; c < s; c++) u[a[c]] = c;
     o.encode = n, o.decode = r, e.exports = o;
-}, [ 351, 265 ], [ 352, 266 ], 231, function(e, t, n) {
+}, [ 355, 265 ], [ 356, 266 ], 231, function(e, t, n) {
     (function(t) {
         function r() {}
         function o(e) {
@@ -10785,14 +10800,15 @@
     };
 }, function(e, t, n) {
     "use strict";
-    var r = n(201), o = n(280), i = n(282), a = n(289), s = n(293), u = n(294), l = r.createStore(r.combineReducers({
+    var r = n(201), o = n(280), i = n(282), a = n(289), s = n(293), u = n(294), l = n(296), c = r.createStore(r.combineReducers({
         menu: o,
         page: i,
         game: a,
         queue: s,
-        chat: u
+        chat: u,
+        account: l
     }));
-    e.exports = l;
+    e.exports = c;
 }, function(e, t, n) {
     "use strict";
     function r(e, t, n) {
@@ -11098,7 +11114,7 @@
     "use strict";
     function n(e) {
         if (o) {
-            var t = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + e;
+            var t = window.location.origin + e;
             o.replaceState(null, null, t);
         }
     }
@@ -11433,122 +11449,30 @@
     };
 }, function(e, t, n) {
     "use strict";
-    e.exports = n(297);
-}, function(e, t, n) {
-    "use strict";
-    function r() {
-        var e = "", t = Math.floor(.001 * (Date.now() - d));
-        return t === u ? s++ : (s = 0, u = t), e += c(l.lookup, f), e += c(l.lookup, m), 
-        s > 0 && (e += c(l.lookup, s)), e += c(l.lookup, t);
-    }
-    function o(t) {
-        return l.seed(t), e.exports;
-    }
-    function i(t) {
-        return m = t, e.exports;
-    }
-    function a(e) {
-        return void 0 !== e && l.characters(e), l.shuffled();
-    }
-    var s, u, l = n(298), c = n(300), p = n(302), h = n(303), d = 1459707606518, f = 6, m = n(304) || 0;
-    e.exports = r, e.exports.generate = r, e.exports.seed = o, e.exports.worker = i, 
-    e.exports.characters = a, e.exports.decode = p, e.exports.isValid = h;
-}, function(e, t, n) {
-    "use strict";
-    function r() {
-        h = !1;
-    }
-    function o(e) {
-        if (!e) return void (c !== f && (c = f, r()));
-        if (e !== c) {
-            if (e.length !== f.length) throw new Error("Custom alphabet for shortid must be " + f.length + " unique characters. You submitted " + e.length + " characters: " + e);
-            var t = e.split("").filter(function(e, t, n) {
-                return t !== n.lastIndexOf(e);
-            });
-            if (t.length) throw new Error("Custom alphabet for shortid must be " + f.length + " unique characters. These characters were not unique: " + t.join(", "));
-            c = e, r();
-        }
-    }
-    function i(e) {
-        return o(e), c;
-    }
-    function a(e) {
-        d.seed(e), p !== e && (r(), p = e);
-    }
-    function s() {
-        c || o(f);
-        for (var e, t = c.split(""), n = [], r = d.nextValue(); t.length > 0; ) r = d.nextValue(), 
-        e = Math.floor(r * t.length), n.push(t.splice(e, 1)[0]);
-        return n.join("");
-    }
-    function u() {
-        return h ? h : h = s();
-    }
-    function l(e) {
-        var t = u();
-        return t[e];
-    }
-    var c, p, h, d = n(299), f = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
-    e.exports = {
-        characters: i,
-        seed: a,
-        lookup: l,
-        shuffled: u
-    };
-}, function(e, t) {
-    "use strict";
-    function n() {
-        return o = (9301 * o + 49297) % 233280, o / 233280;
-    }
-    function r(e) {
-        o = e;
-    }
-    var o = 1;
-    e.exports = {
-        nextValue: n,
-        seed: r
-    };
-}, function(e, t, n) {
-    "use strict";
     function r(e, t) {
-        for (var n, r = 0, i = ""; !n; ) i += e(t >> 4 * r & 15 | o()), n = t < Math.pow(16, r + 1), 
-        r++;
-        return i;
+        switch (e = e || {}, t.type) {
+          case o.ACTION_SET_SUPPORTER:
+            return Object.assign({}, e, {
+                is_supporter: t.is_supporter
+            });
+        }
+        return e;
     }
-    var o = n(301);
+    var o = n(297);
     e.exports = r;
 }, function(e, t) {
     "use strict";
-    function n() {
-        if (!r || !r.getRandomValues) return 48 & Math.floor(256 * Math.random());
-        var e = new Uint8Array(1);
-        return r.getRandomValues(e), 48 & e[0];
-    }
-    var r = "object" == typeof window && (window.crypto || window.msCrypto);
-    e.exports = n;
-}, function(e, t, n) {
-    "use strict";
-    function r(e) {
-        var t = o.shuffled();
+    function n(e) {
         return {
-            version: 15 & t.indexOf(e.substr(0, 1)),
-            worker: 15 & t.indexOf(e.substr(1, 1))
+            type: r,
+            is_supporter: e
         };
     }
-    var o = n(298);
-    e.exports = r;
-}, function(e, t, n) {
-    "use strict";
-    function r(e) {
-        if (!e || "string" != typeof e || e.length < 6) return !1;
-        for (var t = o.characters(), n = e.length, r = 0; r < n; r++) if (t.indexOf(e[r]) === -1) return !1;
-        return !0;
-    }
-    var o = n(298);
-    e.exports = r;
-}, function(e, t) {
-    "use strict";
-    e.exports = 0;
+    var r = "Account_set_supporter";
+    e.exports = {
+        ACTION_SET_SUPPORTER: r,
+        setIsSupporter: n
+    };
 }, function(e, t, n) {
     "use strict";
     function r() {}
@@ -11666,7 +11590,7 @@
     function T() {
         E.clearMoves(E.sockets[0].id);
     }
-    var E, S, A, C, _ = n(306), P = n(307), w = n(279), M = n(283), k = n(285), x = (n(288), 
+    var E, S, A, C, _ = n(299), P = n(300), w = n(279), M = n(283), k = n(285), x = (n(288), 
     n(292)), N = !1, I = Date.now(), O = Date.now();
     e.exports = {
         startLocalTutorial: o,
@@ -11706,7 +11630,7 @@
     function i(e, t) {
         return e - t;
     }
-    var a = n(290), s = n(307), u = n(17), l = n(192), c = n(313), p = -1;
+    var a = n(290), s = n(300), u = n(17), l = n(192), c = n(315), p = -1;
     r.prototype.addMountain = function(e) {
         this.map.setTile(e, a.TILE_MOUNTAIN);
     }, r.prototype.addCity = function(e, t) {
@@ -12071,7 +11995,7 @@
                 turn: e[1]
             };
         }
-        var u = n(290), l = n(312), c = n(296), p = 5, h = {
+        var u = n(290), l = n(305), c = n(306), p = 5, h = {
             REPLAY_VERSION_1: {
                 old_priority: !0
             },
@@ -12123,7 +12047,7 @@
         }, r.options = function(e) {
             return h[e] || {};
         }, e.exports = r;
-    }).call(t, n(308).Buffer);
+    }).call(t, n(301).Buffer);
 }, function(e, t, n) {
     (function(e, r) {
         "use strict";
@@ -12506,7 +12430,7 @@
         function Q(e) {
             return e !== e;
         }
-        var J = n(309), $ = n(310), Z = n(311);
+        var J = n(302), $ = n(303), Z = n(304);
         t.Buffer = e, t.SlowBuffer = v, t.INSPECT_MAX_BYTES = 50, e.TYPED_ARRAY_SUPPORT = void 0 !== r.TYPED_ARRAY_SUPPORT ? r.TYPED_ARRAY_SUPPORT : o(), 
         t.kMaxLength = i(), e.poolSize = 8192, e._augment = function(t) {
             return t.__proto__ = e.prototype, t;
@@ -12818,7 +12742,7 @@
             return this;
         };
         var te = /[^+\/0-9A-Za-z-_]/g;
-    }).call(t, n(308).Buffer, function() {
+    }).call(t, n(301).Buffer, function() {
         return this;
     }());
 }, function(e, t) {
@@ -13079,9 +13003,136 @@
     r = function() {
         return o;
     }.call(t, n, t, e), !(void 0 !== r && (e.exports = r));
+}, function(e, t, n) {
+    "use strict";
+    e.exports = n(307);
+}, function(e, t, n) {
+    "use strict";
+    function r() {
+        var e = "", t = Math.floor(.001 * (Date.now() - d));
+        return t === u ? s++ : (s = 0, u = t), e += c(l.lookup, f), e += c(l.lookup, m), 
+        s > 0 && (e += c(l.lookup, s)), e += c(l.lookup, t);
+    }
+    function o(t) {
+        return l.seed(t), e.exports;
+    }
+    function i(t) {
+        return m = t, e.exports;
+    }
+    function a(e) {
+        return void 0 !== e && l.characters(e), l.shuffled();
+    }
+    var s, u, l = n(308), c = n(310), p = n(312), h = n(313), d = 1459707606518, f = 6, m = n(314) || 0;
+    e.exports = r, e.exports.generate = r, e.exports.seed = o, e.exports.worker = i, 
+    e.exports.characters = a, e.exports.decode = p, e.exports.isValid = h;
+}, function(e, t, n) {
+    "use strict";
+    function r() {
+        h = !1;
+    }
+    function o(e) {
+        if (!e) return void (c !== f && (c = f, r()));
+        if (e !== c) {
+            if (e.length !== f.length) throw new Error("Custom alphabet for shortid must be " + f.length + " unique characters. You submitted " + e.length + " characters: " + e);
+            var t = e.split("").filter(function(e, t, n) {
+                return t !== n.lastIndexOf(e);
+            });
+            if (t.length) throw new Error("Custom alphabet for shortid must be " + f.length + " unique characters. These characters were not unique: " + t.join(", "));
+            c = e, r();
+        }
+    }
+    function i(e) {
+        return o(e), c;
+    }
+    function a(e) {
+        d.seed(e), p !== e && (r(), p = e);
+    }
+    function s() {
+        c || o(f);
+        for (var e, t = c.split(""), n = [], r = d.nextValue(); t.length > 0; ) r = d.nextValue(), 
+        e = Math.floor(r * t.length), n.push(t.splice(e, 1)[0]);
+        return n.join("");
+    }
+    function u() {
+        return h ? h : h = s();
+    }
+    function l(e) {
+        var t = u();
+        return t[e];
+    }
+    var c, p, h, d = n(309), f = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
+    e.exports = {
+        characters: i,
+        seed: a,
+        lookup: l,
+        shuffled: u
+    };
+}, function(e, t) {
+    "use strict";
+    function n() {
+        return o = (9301 * o + 49297) % 233280, o / 233280;
+    }
+    function r(e) {
+        o = e;
+    }
+    var o = 1;
+    e.exports = {
+        nextValue: n,
+        seed: r
+    };
+}, function(e, t, n) {
+    "use strict";
+    function r(e, t) {
+        for (var n, r = 0, i = ""; !n; ) i += e(t >> 4 * r & 15 | o()), n = t < Math.pow(16, r + 1), 
+        r++;
+        return i;
+    }
+    var o = n(311);
+    e.exports = r;
+}, function(e, t) {
+    "use strict";
+    function n() {
+        if (!r || !r.getRandomValues) return 48 & Math.floor(256 * Math.random());
+        var e = new Uint8Array(1);
+        return r.getRandomValues(e), 48 & e[0];
+    }
+    var r = "object" == typeof window && (window.crypto || window.msCrypto);
+    e.exports = n;
+}, function(e, t, n) {
+    "use strict";
+    function r(e) {
+        var t = o.shuffled();
+        return {
+            version: 15 & t.indexOf(e.substr(0, 1)),
+            worker: 15 & t.indexOf(e.substr(1, 1))
+        };
+    }
+    var o = n(308);
+    e.exports = r;
+}, function(e, t, n) {
+    "use strict";
+    function r(e) {
+        if (!e || "string" != typeof e || e.length < 6) return !1;
+        for (var t = o.characters(), n = e.length, r = 0; r < n; r++) if (t.indexOf(e[r]) === -1) return !1;
+        return !0;
+    }
+    var o = n(308);
+    e.exports = r;
+}, function(e, t) {
+    "use strict";
+    e.exports = 0;
 }, function(e, t) {
     "use strict";
     e.exports = "undefined" != typeof window;
+}, function(e, t, n) {
+    "use strict";
+    var r, o = n(306), i = n(288), a = n(292), s = n(285), u = a.getQueryParams();
+    u.user_id && (r = u.user_id, logger.log("Setting user_id from query param to " + r), 
+    s.user_id = r, delete s.stars, delete s.rank, delete s.GIO_LINKED_EMAIL, u.email && (s.GIO_LINKED_EMAIL = u.email, 
+    logger.log("Setting linked email from query param to " + u.email)), i.changeURL("/"));
+    var l;
+    s.user_id ? l = s.user_id : (l = o(), s.user_id = l), logger.log("WARNING: Do not share your user_id with anyone.  It can be used to impersonate you."), 
+    logger.log("user_id: " + l), e.exports = l;
 }, function(e, t, n) {
     "use strict";
     var r = n(19), o = r.createClass({
@@ -13097,7 +13148,7 @@
     e.exports = o;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(316), i = r.createClass({
+    var r = n(19), o = n(319), i = r.createClass({
         displayName: "RedditButton",
         onClick: function() {
             window.open("https://www.reddit.com/r/generalsio");
@@ -13147,7 +13198,7 @@
     e.exports = o;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(316), i = r.createClass({
+    var r = n(19), o = n(319), i = r.createClass({
         displayName: "DiscordButton",
         onClick: function() {
             window.open("https://discord.gg/a97CQZb");
@@ -13175,7 +13226,7 @@
         logger.log("AdBlock detected."), i = !0;
     }
     var i = !1;
-    n(319);
+    n(322);
     "undefined" == typeof fuckAdBlock ? o() : (fuckAdBlock.onDetected(o), fuckAdBlock.onNotDetected(r)), 
     e.exports = {
         adBlockEnabled: function() {
@@ -13280,7 +13331,7 @@
     }(window);
 }, function(e, t, n) {
     "use strict";
-    var r = n(321), o = new r(window.navigator.userAgent);
+    var r = n(324), o = new r(window.navigator.userAgent);
     e.exports = o.mobile();
 }, function(e, t, n) {
     !function(e, t) {
@@ -13653,7 +13704,7 @@
     }(function(t) {
         return "undefined" != typeof e && e.exports ? function(t) {
             e.exports = t();
-        } : n(322);
+        } : n(325);
     }());
 }, function(e, t) {
     e.exports = function() {
@@ -13696,7 +13747,7 @@
     function r(e, t) {
         return (e || "Anonymous") === (t || "Anonymous");
     }
-    var o = n(19), i = n(325), a = n(314), s = "2v2-teammates", u = o.createClass({
+    var o = n(19), i = n(328), a = n(317), s = n(329), u = "2v2-teammates", l = o.createClass({
         displayName: "Leaderboards",
         getInitialState: function() {
             return {
@@ -13720,7 +13771,7 @@
         },
         show2v2TeammatesLeaderboard: function() {
             this.setState({
-                ladder: s
+                ladder: u
             }), this.props.get2v2Teammates();
         },
         leaderboardRows: function(e) {
@@ -13732,13 +13783,18 @@
                 } catch (e) {}
             }
             if (!i) return null;
-            var s = i.users, u = i.stars, l = 0, c = this.props.playerUsername, p = "2v2" === e;
-            return (u || []).map(function(n, i) {
-                var a = t.props.playerRanks && t.props.playerRanks[e] === i + 1, u = p ? r(c, s[2 * i]) || r(c, s[2 * i + 1]) : r(c, s[i]), h = a && u;
+            var u = i.users, l = i.stars, c = i.supporters, p = 0, h = this.props.playerUsername, d = "2v2" === e;
+            return (l || []).map(function(n, i) {
+                i > 0 && (d ? p += 2 : p++);
+                var a = t.props.playerRanks && t.props.playerRanks[e] === i + 1, l = d ? r(h, u[2 * i]) || r(h, u[2 * i + 1]) : r(h, u[i]), f = a && l;
                 return o.createElement("tr", {
                     key: "leaderboard-row-" + i,
-                    className: h ? "highlighted" : ""
-                }, o.createElement("td", null, i + 1), o.createElement("td", null, s[l++] || "Anonymous"), p ? o.createElement("td", null, s[l++] || "Anonymous") : null, o.createElement("td", null, Math.max(0, Math.round(n || 0))));
+                    className: f ? "highlighted" : ""
+                }, o.createElement("td", null, i + 1), o.createElement("td", null, u[p] || "Anonymous", c[p] ? o.createElement(s, {
+                    inverted: f
+                }) : null), d ? o.createElement("td", null, u[p + 1] || "Anonymous", c[p + 1] ? o.createElement(s, {
+                    inverted: f
+                }) : null) : null, o.createElement("td", null, Math.max(0, Math.round(n || 0))));
             });
         },
         leaderboard2v2TeammateRows: function() {
@@ -13766,7 +13822,7 @@
                 e = 2;
                 break;
 
-              case s:
+              case u:
                 e = 3;
             }
             return o.createElement("div", {
@@ -13786,20 +13842,20 @@
                 selectedTab: e,
                 onClicks: [ this.show1v1Leaderboard, this.showFFALeaderboard, this.show2v2Leaderboard, this.show2v2TeammatesLeaderboard ],
                 titles: [ "1v1", "FFA", "2v2", "2v2 Partners" ]
-            }), this.state.ladder === s ? o.createElement("p", {
+            }), this.state.ladder === u ? o.createElement("p", {
                 style: {
                     color: "black",
                     margin: "5px"
                 }
             }, "This leaderboard lists the partners you've played ranked 2v2 with.") : null, o.createElement("table", {
                 id: "leaderboard-table"
-            }, o.createElement("tbody", null, this.state.ladder === s ? o.createElement("tr", null, o.createElement("th", null, "#"), o.createElement("th", null, "Teammate"), o.createElement("th", null, " ", o.createElement(a, null), " "), o.createElement("th", null, "Rank")) : o.createElement("tr", null, o.createElement("th", null, "#"), o.createElement("th", null, "Username"), "2v2" === this.state.ladder ? o.createElement("th", null, "Username") : null, o.createElement("th", null, " ", o.createElement(a, null), " ")), this.state.ladder === s ? this.leaderboard2v2TeammateRows() : this.leaderboardRows(this.state.ladder)))), o.createElement("button", {
+            }, o.createElement("tbody", null, this.state.ladder === u ? o.createElement("tr", null, o.createElement("th", null, "#"), o.createElement("th", null, "Teammate"), o.createElement("th", null, " ", o.createElement(a, null), " "), o.createElement("th", null, "Rank")) : o.createElement("tr", null, o.createElement("th", null, "#"), o.createElement("th", null, "Username"), "2v2" === this.state.ladder ? o.createElement("th", null, "Username") : null, o.createElement("th", null, " ", o.createElement(a, null), " ")), this.state.ladder === u ? this.leaderboard2v2TeammateRows() : this.leaderboardRows(this.state.ladder)))), o.createElement("button", {
                 className: "small inverted center-horizontal",
                 onClick: this.props.hideLeaderboards
             }, "Exit")));
         }
     });
-    e.exports = u;
+    e.exports = l;
 }, function(e, t, n) {
     "use strict";
     var r = n(19), o = r.createClass({
@@ -13820,7 +13876,22 @@
     e.exports = o;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(327), i = n(286), a = n(325), s = n(328), u = n(285), l = n(284), c = r.createClass({
+    var r = n(19), o = r.createClass({
+        displayName: "SupporterTag",
+        openSupportPage: function(e) {
+            e.preventDefault(), e.stopPropagation(), window.open(window.location.origin + "/support");
+        },
+        render: function() {
+            return r.createElement("span", {
+                className: this.props.inverted ? "supporter-tag inverted" : "supporter-tag",
+                onClick: this.openSupportPage
+            }, "Supporter");
+        }
+    });
+    e.exports = o;
+}, function(e, t, n) {
+    "use strict";
+    var r = n(19), o = n(331), i = n(286), a = n(328), s = n(332), u = n(285), l = n(284), c = r.createClass({
         displayName: "Options",
         getInitialState: function() {
             return {
@@ -14193,7 +14264,7 @@
     e.exports = i;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(225), i = n(285), a = n(329), s = r.createClass({
+    var r = n(19), o = n(225), i = n(285), a = n(333), s = r.createClass({
         displayName: "AccountOptions",
         getInitialState: function() {
             var e;
@@ -14343,7 +14414,7 @@
     Object.defineProperty(t, "__esModule", {
         value: !0
     }), t.default = o;
-    var i = n(330), a = r(i), s = n(331), u = r(s), l = n(332), c = r(l), p = n(333), h = r(p), d = {
+    var i = n(334), a = r(i), s = n(335), u = r(s), l = n(336), c = r(l), p = n(337), h = r(p), d = {
         allow_display_name: !1,
         require_display_name: !1,
         allow_utf8_local_part: !0,
@@ -14392,7 +14463,7 @@
         return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
     };
     t.default = o;
-    var a = n(330), s = r(a);
+    var a = n(334), s = r(a);
     e.exports = t.default;
 }, function(e, t, n) {
     "use strict";
@@ -14418,7 +14489,7 @@
     Object.defineProperty(t, "__esModule", {
         value: !0
     }), t.default = o;
-    var i = n(330), a = r(i), s = n(331), u = r(s), l = {
+    var i = n(334), a = r(i), s = n(335), u = r(s), l = {
         require_tld: !0,
         allow_underscores: !1,
         allow_trailing_dot: !1
@@ -14426,7 +14497,7 @@
     e.exports = t.default;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = r.createClass({
+    var r = n(19), o = n(194), i = r.createClass({
         displayName: "Ad",
         getInitialState: function() {
             return {
@@ -14434,6 +14505,12 @@
             };
         },
         componentDidMount: function() {
+            this.props.is_supporter === !1 && this.renderAd();
+        },
+        componentWillReceiveProps: function(e) {
+            this.props.is_supporter !== !1 && e.is_supporter === !1 && this.renderAd();
+        },
+        renderAd: function() {
             if (this.state.useA4G) !function(e, t) {
                 var n = document.createElement("SCRIPT"), r = document.body, o = e + "/async-ajs.min.js", i = function(e, t) {
                     for (var n = 0; n < e.length; n++) if (e[n].src === t) return !0;
@@ -14449,6 +14526,7 @@
             }
         },
         render: function() {
+            if (this.props.is_supporter !== !1) return null;
             var e = Object.assign({}, this.props.style, {
                 width: this.props.width + "px",
                 height: this.props.height + "px"
@@ -14479,20 +14557,22 @@
                     margin: "1px",
                     fontSize: "11px"
                 }
-            }, "Ads help keep updates coming and generals.io servers running!"))), this.state.useA4G ? null : r.createElement("div", {
-                id: this.props.id,
-                className: "absolute-fill"
-            }), this.state.useA4G ? r.createElement("ins", {
+            }, "Ads help keep updates coming and generals.io servers running!"))), this.state.useA4G ? r.createElement("ins", {
                 "data-a4g-zone": 61324,
                 "data-a4g-block": !0,
                 "data-a4g-blockcampaign": !0,
                 className: "absolute-fill"
-            }) : null);
+            }) : r.createElement("div", {
+                id: this.props.id,
+                className: "absolute-fill"
+            }));
         }
     });
-    e.exports = o;
+    e.exports = o.connect(function(e) {
+        return e.account;
+    }, null)(i);
 }, function(e, t, n) {
-    var r = n(336);
+    var r = n(340);
     e.exports = function(e, t, n) {
         function o() {
             var c = r() - u;
@@ -14513,7 +14593,7 @@
     e.exports = Date.now || n;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(194), i = n(281), a = n(225), s = n(17), u = n(288), l = n(338), c = n(339), p = n(334), h = r.createClass({
+    var r = n(19), o = n(194), i = n(281), a = n(225), s = n(17), u = n(288), l = n(342), c = n(343), p = n(338), h = r.createClass({
         displayName: "Queue",
         componentDidMount: function() {
             this.props.isTeamQueue && u.changeURL("/teams/" + encodeURIComponent(this.props.team_id));
@@ -14605,7 +14685,7 @@
     e.exports = i;
 }, function(e, t, n) {
     "use strict";
-    for (var r = n(19), o = n(194), i = n(281), a = n(338), s = n(225), u = n(17), l = n(192), c = n(288), p = n(341), h = n(325), d = n(339), f = n(327), m = n(343), v = n(335), g = [], y = 0; y < u.PLAYER_CAP; y++) g.push(y + 1);
+    for (var r = n(19), o = n(194), i = n(281), a = n(342), s = n(225), u = n(17), l = n(192), c = n(288), p = n(345), h = n(328), d = n(343), f = n(331), m = n(347), v = n(339), g = [], y = 0; y < u.PLAYER_CAP; y++) g.push(y + 1);
     var b = 0, T = 1, E = 2, S = 3, A = [ .25, .5, .75, 1, 1.5, 2, 3, 4 ], C = r.createClass({
         displayName: "CustomQueue",
         getInitialState: function() {
@@ -14832,7 +14912,7 @@
     })(C);
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(342), i = n(225), a = "[team] ", s = r.createClass({
+    var r = n(19), o = n(346), i = n(225), a = "[team] ", s = r.createClass({
         displayName: "ChatRoom",
         getInitialState: function() {
             return {
@@ -14914,7 +14994,7 @@
     e.exports = s;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(17), i = n(339), a = r.createClass({
+    var r = n(19), o = n(17), i = n(343), a = r.createClass({
         displayName: "ChatMessage",
         render: function() {
             var e = this.props.message, t = e.hasOwnProperty("playerIndex") ? o.PLAYER_COLORS[e.playerIndex] : null;
@@ -14939,8 +15019,8 @@
         render: function() {
             var e = Number.isFinite(this.props.min) ? this.props.min : 0, t = Number.isFinite(this.props.max) ? this.props.max : 1, n = Number.isFinite(this.props.step) ? this.props.step : .01, o = this.props.value;
             o = e + n * Math.round((o - e) / n), o = Math.round(100 * o) / 100;
-            var i = o;
-            return 1 === parseFloat(this.props.value) && 0 === e && 1 === t ? i = "1.0" : parseFloat(this.props.value) < .01 && 0 === e && 1 === t && (i = "0.0"), 
+            var i = this.props.valueText;
+            return i || (i = o, 1 === parseFloat(this.props.value) && 0 === e && 1 === t ? i = "1.0" : parseFloat(this.props.value) < .01 && 0 === e && 1 === t && (i = "0.0")), 
             r.createElement("div", {
                 className: "slider-container"
             }, r.createElement("input", {
@@ -14962,9 +15042,9 @@
     e.exports = o;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(194), i = n(283), a = n(345), s = n(341), u = n(279), l = (n(17), 
-    n(192)), c = n(323), p = n(347).Tutorial, h = n(225), d = n(305), f = n(320), m = (n(288), 
-    n(325)), v = n(348), g = n(334), y = r.createClass({
+    var r = n(19), o = n(194), i = n(283), a = n(349), s = n(345), u = n(279), l = (n(17), 
+    n(192)), c = n(326), p = n(351).Tutorial, h = n(225), d = n(298), f = n(323), m = (n(288), 
+    n(328)), v = n(352), g = n(338), y = r.createClass({
         displayName: "GamePage",
         getInitialState: function() {
             return {
@@ -15196,7 +15276,7 @@
                 className: "bold"
             }, "[Spacebar]"), r.createElement("br", null), "Toggle Auto Play"), r.createElement("div", null, r.createElement("span", {
                 className: "bold"
-            }, "[→]"), r.createElement("br", null), "Next Move")), this.state && this.state.hideReplayAd ? null : r.createElement("div", {
+            }, "[→]"), r.createElement("br", null), "Next Move")), this.state && this.state.hideReplayAd || this.props.is_supporter ? null : r.createElement("div", {
                 id: "replay-ad-container"
             }, r.createElement("button", {
                 onClick: this.closeAd,
@@ -15225,7 +15305,8 @@
     e.exports = o.connect(function(e) {
         var t = e.game.chat_room;
         return Object.assign({
-            chat_messages: e.chat[t] || []
+            chat_messages: e.chat[t] || [],
+            is_supporter: e.account.is_supporter
         }, e.game);
     })(y);
 }, function(e, t, n) {
@@ -15242,7 +15323,7 @@
             return "tiny";
         }
     }
-    var o = n(19), i = n(194), a = n(346), s = n(225), u = n(290), l = n(347), c = n(305), p = n(320), h = n(17), d = n(192), f = n(285), m = n(327), v = 3, g = -1, y = 0, b = 1, T = 2, E = 50, S = o.createClass({
+    var o = n(19), i = n(194), a = n(350), s = n(225), u = n(290), l = n(351), c = n(298), p = n(323), h = n(17), d = n(192), f = n(285), m = n(331), v = 3, g = -1, y = 0, b = 1, T = 2, E = 50, S = o.createClass({
         displayName: "GameMap",
         getInitialState: function() {
             return {
@@ -15639,7 +15720,7 @@
     e.exports = s;
 }, function(e, t, n) {
     "use strict";
-    var r = n(291), o = n(19), i = n(46), a = n(279), s = n(283), u = n(320), l = n(305), c = o.createClass({
+    var r = n(291), o = n(19), i = n(46), a = n(279), s = n(283), u = n(323), l = n(298), c = o.createClass({
         displayName: "Tutorial",
         moveToState: function(e) {
             a.dispatch(s.updateTutorialState(e));
@@ -15714,7 +15795,7 @@
     e.exports = p;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(314), i = n(17), a = n(192), s = n(320), u = r.createClass({
+    var r = n(19), o = n(317), i = n(17), a = n(192), s = n(323), u = r.createClass({
         displayName: "InGameLeaderboard",
         getInitialState: function() {
             return {
