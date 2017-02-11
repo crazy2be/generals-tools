@@ -846,7 +846,7 @@
 }, function(e, t) {
     "use strict";
     e.exports = {
-        VERSION: "14.0.3",
+        VERSION: "15.0",
         PLAYER_CAP: 8,
         PLAYER_COLORS: [ "red", "blue", "green", "purple", "teal", "darkgreen", "orange", "maroon" ],
         MAX_USERNAME_LENGTH: 18,
@@ -874,7 +874,7 @@
     };
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(46), i = n(191), a = n(192), s = n(193), u = n(341), l = n(344), c = n(348), p = n(353), h = r.createClass({
+    var r = n(19), o = n(46), i = n(191), a = n(192), s = n(193), u = n(342), l = n(345), c = n(349), p = n(354), h = r.createClass({
         displayName: "App",
         render: function() {
             var e = this.props.state, t = null;
@@ -1023,7 +1023,7 @@
         toArray: d
     };
     e.exports = E;
-}, [ 354, 24 ], function(e, t) {
+}, [ 355, 24 ], function(e, t) {
     "use strict";
     function n(e) {
         for (var t = arguments.length - 1, n = "Minified React error #" + e + "; visit http://facebook.github.io/react/docs/error-decoder.html?invariant=" + e, r = 0; r < t; r++) n += "&args[]=" + encodeURIComponent(arguments[r + 1]);
@@ -2651,7 +2651,7 @@
             return this._fallbackText = o.slice(e, s), this._fallbackText;
         }
     }), i.addPoolingTo(r), e.exports = r;
-}, [ 354, 52 ], function(e, t, n) {
+}, [ 355, 52 ], function(e, t, n) {
     "use strict";
     function r() {
         return !i && o.canUseDOM && (i = "textContent" in document.documentElement ? "textContent" : "innerText"), 
@@ -3794,7 +3794,7 @@
     }
     var m = n(52), v = n(21), g = n(105), y = n(107), b = n(93), T = n(94), E = n(53), S = n(115), A = n(59), C = n(60), _ = n(117), P = n(54), w = n(51), M = n(120), k = n(123), x = n(124), N = n(125), I = (n(79), 
     n(126)), O = n(144), R = (n(29), n(98)), D = (n(25), n(82), n(133), n(147), n(28), 
-    P), B = A.deleteListener, L = w.getNodeFromInstance, G = _.listenTo, H = C.registrationNameModules, U = {
+    P), B = A.deleteListener, L = w.getNodeFromInstance, G = _.listenTo, U = C.registrationNameModules, H = {
         string: !0,
         number: !0
     }, F = "style", j = "__html", V = {
@@ -3928,7 +3928,7 @@
             var n = "<" + this._currentElement.type;
             for (var r in t) if (t.hasOwnProperty(r)) {
                 var o = t[r];
-                if (null != o) if (H.hasOwnProperty(r)) o && i(this, r, o, e); else {
+                if (null != o) if (U.hasOwnProperty(r)) o && i(this, r, o, e); else {
                     r === F && (o && (o = this._previousStyleCopy = v({}, t.style)), o = y.createMarkupForStyles(o, this));
                     var a = null;
                     null != this._tag && d(this._tag, t) ? V.hasOwnProperty(r) || (a = S.createMarkupForCustomAttribute(r, o)) : a = S.createMarkupForProperty(r, o), 
@@ -3941,7 +3941,7 @@
         _createContentMarkup: function(e, t, n) {
             var r = "", o = t.dangerouslySetInnerHTML;
             if (null != o) null != o.__html && (r = o.__html); else {
-                var i = U[typeof t.children] ? t.children : null, a = null != i ? null : t.children;
+                var i = H[typeof t.children] ? t.children : null, a = null != i ? null : t.children;
                 if (null != i) r = R(i); else if (null != a) {
                     var s = this.mountChildren(a, e, n);
                     r = s.join("");
@@ -3952,7 +3952,7 @@
         _createInitialChildren: function(e, t, n, r) {
             var o = t.dangerouslySetInnerHTML;
             if (null != o) null != o.__html && b.queueHTML(r, o.__html); else {
-                var i = U[typeof t.children] ? t.children : null, a = null != i ? null : t.children;
+                var i = H[typeof t.children] ? t.children : null, a = null != i ? null : t.children;
                 if (null != i) b.queueText(r, i); else if (null != a) for (var s = this.mountChildren(a, e, n), u = 0; u < s.length; u++) b.queueChild(r, s[u]);
             }
         },
@@ -3998,14 +3998,14 @@
                 var s = this._previousStyleCopy;
                 for (o in s) s.hasOwnProperty(o) && (a = a || {}, a[o] = "");
                 this._previousStyleCopy = null;
-            } else H.hasOwnProperty(r) ? e[r] && B(this, r) : d(this._tag, e) ? V.hasOwnProperty(r) || S.deleteValueForAttribute(L(this), r) : (E.properties[r] || E.isCustomAttribute(r)) && S.deleteValueForProperty(L(this), r);
+            } else U.hasOwnProperty(r) ? e[r] && B(this, r) : d(this._tag, e) ? V.hasOwnProperty(r) || S.deleteValueForAttribute(L(this), r) : (E.properties[r] || E.isCustomAttribute(r)) && S.deleteValueForProperty(L(this), r);
             for (r in t) {
                 var u = t[r], l = r === F ? this._previousStyleCopy : null != e ? e[r] : void 0;
                 if (t.hasOwnProperty(r) && u !== l && (null != u || null != l)) if (r === F) if (u ? u = this._previousStyleCopy = v({}, u) : this._previousStyleCopy = null, 
                 l) {
                     for (o in l) !l.hasOwnProperty(o) || u && u.hasOwnProperty(o) || (a = a || {}, a[o] = "");
                     for (o in u) u.hasOwnProperty(o) && l[o] !== u[o] && (a = a || {}, a[o] = u[o]);
-                } else a = u; else if (H.hasOwnProperty(r)) u ? i(this, r, u, n) : l && B(this, r); else if (d(this._tag, t)) V.hasOwnProperty(r) || S.setValueForAttribute(L(this), r, u); else if (E.properties[r] || E.isCustomAttribute(r)) {
+                } else a = u; else if (U.hasOwnProperty(r)) u ? i(this, r, u, n) : l && B(this, r); else if (d(this._tag, t)) V.hasOwnProperty(r) || S.setValueForAttribute(L(this), r, u); else if (E.properties[r] || E.isCustomAttribute(r)) {
                     var c = L(this);
                     null != u ? S.setValueForProperty(c, r, u) : S.deleteValueForProperty(c, r);
                 }
@@ -4013,7 +4013,7 @@
             a && y.setValueForStyles(L(this), a, this);
         },
         _updateDOMChildren: function(e, t, n, r) {
-            var o = U[typeof e.children] ? e.children : null, i = U[typeof t.children] ? t.children : null, a = e.dangerouslySetInnerHTML && e.dangerouslySetInnerHTML.__html, s = t.dangerouslySetInnerHTML && t.dangerouslySetInnerHTML.__html, u = null != o ? null : e.children, l = null != i ? null : t.children, c = null != o || null != a, p = null != i || null != s;
+            var o = H[typeof e.children] ? e.children : null, i = H[typeof t.children] ? t.children : null, a = e.dangerouslySetInnerHTML && e.dangerouslySetInnerHTML.__html, s = t.dangerouslySetInnerHTML && t.dangerouslySetInnerHTML.__html, u = null != o ? null : e.children, l = null != i ? null : t.children, c = null != o || null != a, p = null != i || null != s;
             null != u && null == l ? this.updateChildren(null, n, r) : c && !p && this.updateTextContent(""), 
             null != i ? o !== i && this.updateTextContent("" + i) : null != s ? a !== s && this.updateMarkup("" + s) : null != l && this.updateChildren(l, n, r);
         },
@@ -6765,7 +6765,7 @@
             i = "React mount: " + ("string" == typeof s ? s : s.displayName || s.name), console.time(i);
         }
         var u = C.mountComponent(e, n, null, b(e, t), o, 0);
-        i && console.timeEnd(i), e._renderedComponent._topLevelWrapper = e, H._mountImageIntoNode(u, t, e, r, n);
+        i && console.timeEnd(i), e._renderedComponent._topLevelWrapper = e, U._mountImageIntoNode(u, t, e, r, n);
     }
     function s(e, t, n, r) {
         var o = P.ReactReconcileTransaction.getPooled(!n && T.useCreateElement);
@@ -6800,14 +6800,14 @@
     G.prototype.isReactComponent = {}, G.prototype.render = function() {
         return this.props.child;
     }, G.isReactTopLevelWrapper = !0;
-    var H = {
+    var U = {
         TopLevelWrapper: G,
         _instancesByReactRootID: B,
         scrollMonitor: function(e, t) {
             t();
         },
         _updateRootComponent: function(e, t, n, r, o) {
-            return H.scrollMonitor(r, function() {
+            return U.scrollMonitor(r, function() {
                 _.enqueueElementInternal(e, t, n), o && _.enqueueCallbackInternal(e, o);
             }), e;
         },
@@ -6819,7 +6819,7 @@
             return B[i] = o, o;
         },
         renderSubtreeIntoContainer: function(e, t, n, r) {
-            return null != e && S.has(e) ? void 0 : d("38"), H._renderSubtreeIntoContainer(e, t, n, r);
+            return null != e && S.has(e) ? void 0 : d("38"), U._renderSubtreeIntoContainer(e, t, n, r);
         },
         _renderSubtreeIntoContainer: function(e, t, n, r) {
             _.validateCallback(r, "ReactDOM.render"), v.isValidElement(t) ? void 0 : d("39", "string" == typeof t ? " Instead of passing a string like 'div', pass React.createElement('div') or <div />." : "function" == typeof t ? " Instead of passing a class like Foo, pass React.createElement(Foo) or <Foo />." : null != t && void 0 !== t.props ? " This may be caused by unintentionally loading two independent copies of React." : "");
@@ -6837,15 +6837,15 @@
                     var m = c._renderedComponent.getPublicInstance(), g = r && function() {
                         r.call(m);
                     };
-                    return H._updateRootComponent(c, s, a, n, g), m;
+                    return U._updateRootComponent(c, s, a, n, g), m;
                 }
-                H.unmountComponentAtNode(n);
+                U.unmountComponentAtNode(n);
             }
-            var y = o(n), b = y && !!i(y), T = l(n), E = b && !c && !T, A = H._renderNewRootComponent(s, n, E, a)._renderedComponent.getPublicInstance();
+            var y = o(n), b = y && !!i(y), T = l(n), E = b && !c && !T, A = U._renderNewRootComponent(s, n, E, a)._renderedComponent.getPublicInstance();
             return r && r.call(A), A;
         },
         render: function(e, t, n) {
-            return H._renderSubtreeIntoContainer(null, e, t, n);
+            return U._renderSubtreeIntoContainer(null, e, t, n);
         },
         unmountComponentAtNode: function(e) {
             c(e) ? void 0 : d("40");
@@ -6873,7 +6873,7 @@
             } else k(t, e), y.precacheNode(n, t.firstChild);
         }
     };
-    e.exports = H;
+    e.exports = U;
 }, function(e, t, n) {
     "use strict";
     function r(e, t) {
@@ -7171,7 +7171,7 @@
     };
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(194), i = n(223), a = n(224), s = n(225), u = n(285), l = n(17), c = n(192), p = n(317), h = n(287), d = n(318), f = n(320), m = n(298), v = n(279), g = n(292), y = n(321), b = n(323), T = n(326), E = n(327), S = n(330), A = n(338), C = n(339), _ = n(288), P = n(329), w = r.createClass({
+    var r = n(19), o = n(194), i = n(223), a = n(224), s = n(225), u = n(285), l = n(17), c = n(192), p = n(317), h = n(287), d = n(318), f = n(320), m = n(298), v = n(279), g = n(292), y = n(321), b = n(323), T = n(326), E = n(327), S = n(331), A = n(339), C = n(340), _ = n(288), P = n(329), w = r.createClass({
         displayName: "RankItem",
         render: function() {
             return this.props.stars || this.props.rank ? r.createElement("div", {
@@ -7224,7 +7224,7 @@
             });
         },
         ignoreClick: function(e) {
-            e.preventDefault(), e.stopPropagation();
+            e.stopPropagation();
         },
         serverSetUsername: C(function(e) {
             s.setUsername(e);
@@ -7454,13 +7454,15 @@
             }, "Contact Us"), r.createElement("a", {
                 target: "_blank",
                 href: "/versions"
-            }, "v", l.VERSION, " (Changelog)")), this.props.is_supporter ? r.createElement("div", {
+            }, "v", l.VERSION)), r.createElement("div", {
                 style: {
-                    bottom: 0,
+                    top: 0,
                     margin: "5px"
                 },
                 className: "center-horizontal"
-            }, r.createElement(P, null)) : r.createElement("div", {
+            }, r.createElement(P, {
+                faded: !this.props.is_supporter
+            })), this.props.is_supporter ? null : r.createElement("div", {
                 id: "main-menu-leaderboard-ad",
                 className: "center-horizontal",
                 style: {
@@ -7477,17 +7479,21 @@
                 id: "game-modes",
                 className: "alert center",
                 onClick: this.ignoreClick
-            }, r.createElement("center", null, y.adBlockEnabled() ? r.createElement("p", {
+            }, r.createElement("center", null, !this.props.is_supporter && y.adBlockEnabled() ? r.createElement("p", {
                 style: {
-                    padding: "5px 0",
+                    padding: "5px",
                     marginBottom: "15px",
-                    borderBottom: "1px solid black"
+                    backgroundColor: "#eee"
                 }
             }, "Consider disabling ", r.createElement("span", {
                 style: {
                     color: "red"
                 }
-            }, "AdBlock"), ".", r.createElement("br", null), "Ads help keep updates coming", r.createElement("br", null), "and generals.io servers running!") : null, r.createElement("button", {
+            }, "AdBlock"), ".", r.createElement("br", null), "Ads keep updates coming and servers running!", r.createElement("br", null), "Or, consider ", r.createElement("a", {
+                className: "dark",
+                href: "/support",
+                target: "_blank"
+            }, "becoming a supporter"), ".") : null, r.createElement("button", {
                 className: "inverted",
                 onClick: this.onFFAClicked
             }, "FFA"), r.createElement("p", {
@@ -8302,19 +8308,19 @@
         return K.connected;
     }
     function i() {
-        K.emit("stars_and_rank", U);
+        K.emit("stars_and_rank", H);
     }
     function a(e) {
-        K.emit("set_username", U, e, H.NOT_BOT_KEY);
+        K.emit("set_username", H, e, U.NOT_BOT_KEY);
     }
     function s() {
-        K.emit("play", U, H.NOT_BOT_KEY);
+        K.emit("play", H, U.NOT_BOT_KEY);
     }
     function u() {
-        K.emit("join_1v1", U, H.NOT_BOT_KEY);
+        K.emit("join_1v1", H, U.NOT_BOT_KEY);
     }
     function l(e) {
-        K.emit("join_private", e, U, H.NOT_BOT_KEY);
+        K.emit("join_private", e, H, U.NOT_BOT_KEY);
     }
     function c(e, t) {
         K.emit("set_custom_team", e, t);
@@ -8341,7 +8347,7 @@
         K.emit("leaderboard", e);
     }
     function y() {
-        K.emit("get_2v2_teammates", U);
+        K.emit("get_2v2_teammates", H);
     }
     function b() {
         K.emit("leave_game");
@@ -8360,23 +8366,23 @@
     }
     function A(e) {
         K.emit("replay_list", {
-            user_id: U,
+            user_id: H,
             max_time: e
         });
     }
     function C(e) {
-        K.emit("join_team", e, U, H.NOT_BOT_KEY);
+        K.emit("join_team", e, H, U.NOT_BOT_KEY);
     }
     function _(e) {
         K.emit("leave_team", e);
     }
     function P(e, t) {
-        K.emit("link_email", U, e, t);
+        K.emit("link_email", H, e, t);
     }
     function w(e, t) {
         K.emit("recover_account", e, t);
     }
-    var M = n(226), k = n(279), x = n(224), N = n(283), I = n(281), O = n(295), R = n(297), D = n(285), B = n(191), L = n(298), G = n(288), H = n(17), U = n(316);
+    var M = n(226), k = n(279), x = n(224), N = n(283), I = n(281), O = n(295), R = n(297), D = n(285), B = n(191), L = n(298), G = n(288), U = n(17), H = n(316);
     try {
         if (D.hasOwnProperty("stars")) {
             console.group("Found Cached Stars");
@@ -8411,7 +8417,7 @@
     var K = M(q), Y = !1;
     K.on("connect", function() {
         return Y ? void logger.log("Reconnected to websocket server.") : (logger.log("Connected to websocket server."), 
-        Y = !0, i(), void K.emit("is_supporter", U, function(e) {
+        Y = !0, i(), void K.emit("is_supporter", H, function(e) {
             if (logger.log("Player is supporter: " + e), k.dispatch(R.setIsSupporter(e)), !e) {
                 var t = document.createElement("script");
                 t.src = "https://www.googletagservices.com/tag/js/gpt.js", t.async = "async", document.head.appendChild(t);
@@ -8535,7 +8541,7 @@
         s.authority = s.authority.replace("[", "").replace("]", "").replace(/;/g, ":"), 
         s.ipv6uri = !0), s;
     };
-}, [ 355, 230 ], [ 356, 231 ], function(e, t) {
+}, [ 356, 230 ], [ 357, 231 ], function(e, t) {
     function n(e) {
         if (e = String(e), !(e.length > 1e4)) {
             var t = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(e);
@@ -9021,7 +9027,7 @@
                         };
                     }
                     if (!n("json-parse")) {
-                        var B, L, G = o.fromCharCode, H = {
+                        var B, L, G = o.fromCharCode, U = {
                             92: "\\",
                             34: '"',
                             47: "/",
@@ -9030,7 +9036,7 @@
                             110: "\n",
                             102: "\f",
                             114: "\r"
-                        }, U = function() {
+                        }, H = function() {
                             throw B = L = null, c();
                         }, F = function() {
                             for (var e, t, n, r, o, i = L, a = i.length; B < a; ) switch (o = i.charCodeAt(B)) {
@@ -9050,7 +9056,7 @@
                                 return e = P ? i.charAt(B) : i[B], B++, e;
 
                               case 34:
-                                for (e = "@", B++; B < a; ) if (o = i.charCodeAt(B), o < 32) U(); else if (92 == o) switch (o = i.charCodeAt(++B)) {
+                                for (e = "@", B++; B < a; ) if (o = i.charCodeAt(B), o < 32) H(); else if (92 == o) switch (o = i.charCodeAt(++B)) {
                                   case 92:
                                   case 34:
                                   case 47:
@@ -9059,61 +9065,61 @@
                                   case 110:
                                   case 102:
                                   case 114:
-                                    e += H[o], B++;
+                                    e += U[o], B++;
                                     break;
 
                                   case 117:
-                                    for (t = ++B, n = B + 4; B < n; B++) o = i.charCodeAt(B), o >= 48 && o <= 57 || o >= 97 && o <= 102 || o >= 65 && o <= 70 || U();
+                                    for (t = ++B, n = B + 4; B < n; B++) o = i.charCodeAt(B), o >= 48 && o <= 57 || o >= 97 && o <= 102 || o >= 65 && o <= 70 || H();
                                     e += G("0x" + i.slice(t, B));
                                     break;
 
                                   default:
-                                    U();
+                                    H();
                                 } else {
                                     if (34 == o) break;
                                     for (o = i.charCodeAt(B), t = B; o >= 32 && 92 != o && 34 != o; ) o = i.charCodeAt(++B);
                                     e += i.slice(t, B);
                                 }
                                 if (34 == i.charCodeAt(B)) return B++, e;
-                                U();
+                                H();
 
                               default:
                                 if (t = B, 45 == o && (r = !0, o = i.charCodeAt(++B)), o >= 48 && o <= 57) {
-                                    for (48 == o && (o = i.charCodeAt(B + 1), o >= 48 && o <= 57) && U(), r = !1; B < a && (o = i.charCodeAt(B), 
+                                    for (48 == o && (o = i.charCodeAt(B + 1), o >= 48 && o <= 57) && H(), r = !1; B < a && (o = i.charCodeAt(B), 
                                     o >= 48 && o <= 57); B++) ;
                                     if (46 == i.charCodeAt(B)) {
                                         for (n = ++B; n < a && (o = i.charCodeAt(n), o >= 48 && o <= 57); n++) ;
-                                        n == B && U(), B = n;
+                                        n == B && H(), B = n;
                                     }
                                     if (o = i.charCodeAt(B), 101 == o || 69 == o) {
                                         for (o = i.charCodeAt(++B), 43 != o && 45 != o || B++, n = B; n < a && (o = i.charCodeAt(n), 
                                         o >= 48 && o <= 57); n++) ;
-                                        n == B && U(), B = n;
+                                        n == B && H(), B = n;
                                     }
                                     return +i.slice(t, B);
                                 }
-                                if (r && U(), "true" == i.slice(B, B + 4)) return B += 4, !0;
+                                if (r && H(), "true" == i.slice(B, B + 4)) return B += 4, !0;
                                 if ("false" == i.slice(B, B + 5)) return B += 5, !1;
                                 if ("null" == i.slice(B, B + 4)) return B += 4, null;
-                                U();
+                                H();
                             }
                             return "$";
                         }, j = function(e) {
                             var t, n;
-                            if ("$" == e && U(), "string" == typeof e) {
+                            if ("$" == e && H(), "string" == typeof e) {
                                 if ("@" == (P ? e.charAt(0) : e[0])) return e.slice(1);
                                 if ("[" == e) {
-                                    for (t = []; e = F(), "]" != e; n || (n = !0)) n && ("," == e ? (e = F(), "]" == e && U()) : U()), 
-                                    "," == e && U(), t.push(j(e));
+                                    for (t = []; e = F(), "]" != e; n || (n = !0)) n && ("," == e ? (e = F(), "]" == e && H()) : H()), 
+                                    "," == e && H(), t.push(j(e));
                                     return t;
                                 }
                                 if ("{" == e) {
-                                    for (t = {}; e = F(), "}" != e; n || (n = !0)) n && ("," == e ? (e = F(), "}" == e && U()) : U()), 
-                                    "," != e && "string" == typeof e && "@" == (P ? e.charAt(0) : e[0]) && ":" == F() || U(), 
+                                    for (t = {}; e = F(), "}" != e; n || (n = !0)) n && ("," == e ? (e = F(), "}" == e && H()) : H()), 
+                                    "," != e && "string" == typeof e && "@" == (P ? e.charAt(0) : e[0]) && ":" == F() || H(), 
                                     t[e.slice(1)] = j(F());
                                     return t;
                                 }
-                                U();
+                                H();
                             }
                             return e;
                         }, V = function(e, t, n) {
@@ -9128,7 +9134,7 @@
                         };
                         t.parse = function(e, t) {
                             var n, r;
-                            return B = 0, L = "" + e, n = j(F()), "$" != F() && U(), B = L = null, t && y.call(t) == T ? W((r = {}, 
+                            return B = 0, L = "" + e, n = j(F()), "$" != F() && H(), B = L = null, t && y.call(t) == T ? W((r = {}, 
                             r[""] = n, r), "", t) : n;
                         };
                     }
@@ -10429,7 +10435,7 @@
     }
     for (var i, a = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split(""), s = 64, u = {}, l = 0, c = 0; c < s; c++) u[a[c]] = c;
     o.encode = n, o.decode = r, e.exports = o;
-}, [ 355, 265 ], [ 356, 266 ], 231, function(e, t, n) {
+}, [ 356, 265 ], [ 357, 266 ], 231, function(e, t, n) {
     (function(t) {
         function r() {}
         function o(e) {
@@ -12349,16 +12355,16 @@
             t < 0 && (t = 4294967295 + t + 1);
             for (var o = 0, i = Math.min(e.length - n, 4); o < i; ++o) e[n + o] = t >>> 8 * (r ? o : 3 - o) & 255;
         }
-        function H(e, t, n, r, o, i) {
+        function U(e, t, n, r, o, i) {
             if (n + r > e.length) throw new RangeError("Index out of range");
             if (n < 0) throw new RangeError("Index out of range");
         }
-        function U(e, t, n, r, o) {
-            return o || H(e, t, n, 4, 3.4028234663852886e38, -3.4028234663852886e38), $.write(e, t, n, r, 23, 4), 
+        function H(e, t, n, r, o) {
+            return o || U(e, t, n, 4, 3.4028234663852886e38, -3.4028234663852886e38), $.write(e, t, n, r, 23, 4), 
             n + 4;
         }
         function F(e, t, n, r, o) {
-            return o || H(e, t, n, 8, 1.7976931348623157e308, -1.7976931348623157e308), $.write(e, t, n, r, 52, 8), 
+            return o || U(e, t, n, 8, 1.7976931348623157e308, -1.7976931348623157e308), $.write(e, t, n, r, 52, 8), 
             n + 8;
         }
         function j(e) {
@@ -12703,9 +12709,9 @@
             e.TYPED_ARRAY_SUPPORT ? (this[n] = t >>> 24, this[n + 1] = t >>> 16, this[n + 2] = t >>> 8, 
             this[n + 3] = 255 & t) : G(this, t, n, !1), n + 4;
         }, e.prototype.writeFloatLE = function(e, t, n) {
-            return U(this, e, t, !0, n);
+            return H(this, e, t, !0, n);
         }, e.prototype.writeFloatBE = function(e, t, n) {
-            return U(this, e, t, !1, n);
+            return H(this, e, t, !1, n);
         }, e.prototype.writeDoubleLE = function(e, t, n) {
             return F(this, e, t, !0, n);
         }, e.prototype.writeDoubleBE = function(e, t, n) {
@@ -13747,7 +13753,7 @@
     function r(e, t) {
         return (e || "Anonymous") === (t || "Anonymous");
     }
-    var o = n(19), i = n(328), a = n(317), s = n(329), u = "2v2-teammates", l = o.createClass({
+    var o = n(19), i = n(328), a = n(317), s = n(329), u = n(330), l = "2v2-teammates", c = o.createClass({
         displayName: "Leaderboards",
         getInitialState: function() {
             return {
@@ -13771,7 +13777,7 @@
         },
         show2v2TeammatesLeaderboard: function() {
             this.setState({
-                ladder: u
+                ladder: l
             }), this.props.get2v2Teammates();
         },
         leaderboardRows: function(e) {
@@ -13783,17 +13789,23 @@
                 } catch (e) {}
             }
             if (!i) return null;
-            var u = i.users, l = i.stars, c = i.supporters, p = 0, h = this.props.playerUsername, d = "2v2" === e;
-            return (l || []).map(function(n, i) {
-                i > 0 && (d ? p += 2 : p++);
-                var a = t.props.playerRanks && t.props.playerRanks[e] === i + 1, l = d ? r(h, u[2 * i]) || r(h, u[2 * i + 1]) : r(h, u[i]), f = a && l;
+            var l = i.users, c = i.stars, p = i.supporters, h = 0, d = this.props.playerUsername, f = "2v2" === e;
+            return (c || []).map(function(n, i) {
+                i > 0 && (f ? h += 2 : h++);
+                var a = t.props.playerRanks && t.props.playerRanks[e] === i + 1, c = f ? r(d, l[2 * i]) || r(d, l[2 * i + 1]) : r(d, l[i]), m = a && c;
                 return o.createElement("tr", {
                     key: "leaderboard-row-" + i,
-                    className: f ? "highlighted" : ""
-                }, o.createElement("td", null, i + 1), o.createElement("td", null, u[p] || "Anonymous", c[p] ? o.createElement(s, {
-                    inverted: f
-                }) : null), d ? o.createElement("td", null, u[p + 1] || "Anonymous", c[p + 1] ? o.createElement(s, {
-                    inverted: f
+                    className: m ? "highlighted" : ""
+                }, o.createElement("td", null, i + 1), o.createElement("td", null, o.createElement(u, {
+                    text: l[h],
+                    inverted: m
+                }), p[h] ? o.createElement("br", null) : null, p[h] ? o.createElement(s, {
+                    inverted: m
+                }) : null), f ? o.createElement("td", null, o.createElement(u, {
+                    text: l[h + 1],
+                    inverted: m
+                }), p[h] ? o.createElement("br", null) : null, p[h + 1] ? o.createElement(s, {
+                    inverted: m
                 }) : null) : null, o.createElement("td", null, Math.max(0, Math.round(n || 0))));
             });
         },
@@ -13822,7 +13834,7 @@
                 e = 2;
                 break;
 
-              case u:
+              case l:
                 e = 3;
             }
             return o.createElement("div", {
@@ -13842,20 +13854,20 @@
                 selectedTab: e,
                 onClicks: [ this.show1v1Leaderboard, this.showFFALeaderboard, this.show2v2Leaderboard, this.show2v2TeammatesLeaderboard ],
                 titles: [ "1v1", "FFA", "2v2", "2v2 Partners" ]
-            }), this.state.ladder === u ? o.createElement("p", {
+            }), this.state.ladder === l ? o.createElement("p", {
                 style: {
                     color: "black",
                     margin: "5px"
                 }
             }, "This leaderboard lists the partners you've played ranked 2v2 with.") : null, o.createElement("table", {
                 id: "leaderboard-table"
-            }, o.createElement("tbody", null, this.state.ladder === u ? o.createElement("tr", null, o.createElement("th", null, "#"), o.createElement("th", null, "Teammate"), o.createElement("th", null, " ", o.createElement(a, null), " "), o.createElement("th", null, "Rank")) : o.createElement("tr", null, o.createElement("th", null, "#"), o.createElement("th", null, "Username"), "2v2" === this.state.ladder ? o.createElement("th", null, "Username") : null, o.createElement("th", null, " ", o.createElement(a, null), " ")), this.state.ladder === u ? this.leaderboard2v2TeammateRows() : this.leaderboardRows(this.state.ladder)))), o.createElement("button", {
+            }, o.createElement("tbody", null, this.state.ladder === l ? o.createElement("tr", null, o.createElement("th", null, "#"), o.createElement("th", null, "Teammate"), o.createElement("th", null, " ", o.createElement(a, null), " "), o.createElement("th", null, "Rank")) : o.createElement("tr", null, o.createElement("th", null, "#"), o.createElement("th", null, "Username"), "2v2" === this.state.ladder ? o.createElement("th", null, "Username") : null, o.createElement("th", null, " ", o.createElement(a, null), " ")), this.state.ladder === l ? this.leaderboard2v2TeammateRows() : this.leaderboardRows(this.state.ladder)))), o.createElement("button", {
                 className: "small inverted center-horizontal",
                 onClick: this.props.hideLeaderboards
             }, "Exit")));
         }
     });
-    e.exports = l;
+    e.exports = c;
 }, function(e, t, n) {
     "use strict";
     var r = n(19), o = r.createClass({
@@ -13879,11 +13891,13 @@
     var r = n(19), o = r.createClass({
         displayName: "SupporterTag",
         openSupportPage: function(e) {
-            e.preventDefault(), e.stopPropagation(), window.open(window.location.origin + "/support");
+            e.preventDefault(), e.stopPropagation(), window.open("/support");
         },
         render: function() {
-            return r.createElement("span", {
-                className: this.props.inverted ? "supporter-tag inverted" : "supporter-tag",
+            var e = "supporter-tag";
+            return this.props.inverted && (e += " inverted"), this.props.faded && (e += " faded"), 
+            r.createElement("span", {
+                className: e,
                 onClick: this.openSupportPage
             }, "Supporter");
         }
@@ -13891,7 +13905,20 @@
     e.exports = o;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(331), i = n(286), a = n(328), s = n(332), u = n(285), l = n(284), c = r.createClass({
+    var r = n(19), o = n(17), i = r.createClass({
+        displayName: "Username",
+        render: function() {
+            var e = this.props.text || "Anonymous", t = "";
+            return e.startsWith(o.BOT_TAG) && (t = o.BOT_TAG, e = e.substring(o.BOT_TAG.length)), 
+            t && (t = t.substring(1, t.length - 1)), r.createElement("span", null, t ? r.createElement("span", {
+                className: "username-tag" + (this.props.inverted ? " inverted" : "")
+            }, t) : null, e);
+        }
+    });
+    e.exports = i;
+}, function(e, t, n) {
+    "use strict";
+    var r = n(19), o = n(332), i = n(286), a = n(328), s = n(333), u = n(285), l = n(284), c = r.createClass({
         displayName: "Options",
         getInitialState: function() {
             return {
@@ -14264,7 +14291,7 @@
     e.exports = i;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(225), i = n(285), a = n(333), s = r.createClass({
+    var r = n(19), o = n(225), i = n(285), a = n(334), s = r.createClass({
         displayName: "AccountOptions",
         getInitialState: function() {
             var e;
@@ -14414,7 +14441,7 @@
     Object.defineProperty(t, "__esModule", {
         value: !0
     }), t.default = o;
-    var i = n(334), a = r(i), s = n(335), u = r(s), l = n(336), c = r(l), p = n(337), h = r(p), d = {
+    var i = n(335), a = r(i), s = n(336), u = r(s), l = n(337), c = r(l), p = n(338), h = r(p), d = {
         allow_display_name: !1,
         require_display_name: !1,
         allow_utf8_local_part: !0,
@@ -14463,7 +14490,7 @@
         return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
     };
     t.default = o;
-    var a = n(334), s = r(a);
+    var a = n(335), s = r(a);
     e.exports = t.default;
 }, function(e, t, n) {
     "use strict";
@@ -14489,7 +14516,7 @@
     Object.defineProperty(t, "__esModule", {
         value: !0
     }), t.default = o;
-    var i = n(334), a = r(i), s = n(335), u = r(s), l = {
+    var i = n(335), a = r(i), s = n(336), u = r(s), l = {
         require_tld: !0,
         allow_underscores: !1,
         allow_trailing_dot: !1
@@ -14497,7 +14524,7 @@
     e.exports = t.default;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(194), i = r.createClass({
+    var r = n(19), o = n(194), i = n(321), a = r.createClass({
         displayName: "Ad",
         getInitialState: function() {
             return {
@@ -14505,7 +14532,16 @@
             };
         },
         componentDidMount: function() {
-            this.props.is_supporter === !1 && this.renderAd();
+            if (this.props.is_supporter === !1 && this.renderAd(), !i.adBlockEnabled()) {
+                var e = this;
+                this.rerenderTimeout = setTimeout(function() {
+                    i.adBlockEnabled() && (logger.log("Re-rendering Ad element because adblock was detected late."), 
+                    e.forceUpdate());
+                }, 1e3);
+            }
+        },
+        componentWillUnmount: function() {
+            this.rerenderTimeout && clearTimeout(this.rerenderTimeout);
         },
         componentWillReceiveProps: function(e) {
             this.props.is_supporter !== !1 && e.is_supporter === !1 && this.renderAd();
@@ -14530,7 +14566,10 @@
             var e = Object.assign({}, this.props.style, {
                 width: this.props.width + "px",
                 height: this.props.height + "px"
-            });
+            }), t = {
+                margin: "1px",
+                fontSize: "11px"
+            };
             return r.createElement("div", {
                 className: "relative",
                 style: e
@@ -14553,11 +14592,14 @@
                     fontSize: "14px"
                 }
             }, "Advertisement"), r.createElement("p", {
-                style: {
-                    margin: "1px",
-                    fontSize: "11px"
-                }
-            }, "Ads help keep updates coming and generals.io servers running!"))), this.state.useA4G ? r.createElement("ins", {
+                style: t
+            }, "Ads keep updates coming and servers running!"), r.createElement("p", {
+                style: t
+            }, "If you block ads, consider ", r.createElement("a", {
+                className: "underline anim-white",
+                href: "/support",
+                target: "_blank"
+            }, "becoming a supporter"), "."))), i.adBlockEnabled() ? null : this.state.useA4G ? r.createElement("ins", {
                 "data-a4g-zone": 61324,
                 "data-a4g-block": !0,
                 "data-a4g-blockcampaign": !0,
@@ -14570,9 +14612,9 @@
     });
     e.exports = o.connect(function(e) {
         return e.account;
-    }, null)(i);
+    }, null)(a);
 }, function(e, t, n) {
-    var r = n(340);
+    var r = n(341);
     e.exports = function(e, t, n) {
         function o() {
             var c = r() - u;
@@ -14593,7 +14635,7 @@
     e.exports = Date.now || n;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(194), i = n(281), a = n(225), s = n(17), u = n(288), l = n(342), c = n(343), p = n(338), h = r.createClass({
+    var r = n(19), o = n(194), i = n(281), a = n(225), s = n(17), u = n(288), l = n(343), c = n(344), p = n(339), h = r.createClass({
         displayName: "Queue",
         componentDidMount: function() {
             this.props.isTeamQueue && u.changeURL("/teams/" + encodeURIComponent(this.props.team_id));
@@ -14685,7 +14727,7 @@
     e.exports = i;
 }, function(e, t, n) {
     "use strict";
-    for (var r = n(19), o = n(194), i = n(281), a = n(342), s = n(225), u = n(17), l = n(192), c = n(288), p = n(345), h = n(328), d = n(343), f = n(331), m = n(347), v = n(339), g = [], y = 0; y < u.PLAYER_CAP; y++) g.push(y + 1);
+    for (var r = n(19), o = n(194), i = n(281), a = n(343), s = n(225), u = n(17), l = n(192), c = n(288), p = n(346), h = n(328), d = n(344), f = n(332), m = n(348), v = n(340), g = [], y = 0; y < u.PLAYER_CAP; y++) g.push(y + 1);
     var b = 0, T = 1, E = 2, S = 3, A = [ .25, .5, .75, 1, 1.5, 2, 3, 4 ], C = r.createClass({
         displayName: "CustomQueue",
         getInitialState: function() {
@@ -14912,7 +14954,7 @@
     })(C);
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(346), i = n(225), a = "[team] ", s = r.createClass({
+    var r = n(19), o = n(347), i = n(225), a = "[team] ", s = r.createClass({
         displayName: "ChatRoom",
         getInitialState: function() {
             return {
@@ -14994,7 +15036,7 @@
     e.exports = s;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(17), i = n(343), a = r.createClass({
+    var r = n(19), o = n(17), i = n(344), a = r.createClass({
         displayName: "ChatMessage",
         render: function() {
             var e = this.props.message, t = e.hasOwnProperty("playerIndex") ? o.PLAYER_COLORS[e.playerIndex] : null;
@@ -15042,9 +15084,9 @@
     e.exports = o;
 }, function(e, t, n) {
     "use strict";
-    var r = n(19), o = n(194), i = n(283), a = n(349), s = n(345), u = n(279), l = (n(17), 
-    n(192)), c = n(326), p = n(351).Tutorial, h = n(225), d = n(298), f = n(323), m = (n(288), 
-    n(328)), v = n(352), g = n(338), y = r.createClass({
+    var r = n(19), o = n(194), i = n(283), a = n(350), s = n(346), u = n(279), l = (n(17), 
+    n(192)), c = n(326), p = n(352).Tutorial, h = n(225), d = n(298), f = n(323), m = (n(288), 
+    n(328)), v = n(353), g = n(339), y = r.createClass({
         displayName: "GamePage",
         getInitialState: function() {
             return {
@@ -15323,7 +15365,7 @@
             return "tiny";
         }
     }
-    var o = n(19), i = n(194), a = n(350), s = n(225), u = n(290), l = n(351), c = n(298), p = n(323), h = n(17), d = n(192), f = n(285), m = n(331), v = 3, g = -1, y = 0, b = 1, T = 2, E = 50, S = o.createClass({
+    var o = n(19), i = n(194), a = n(351), s = n(225), u = n(290), l = n(352), c = n(298), p = n(323), h = n(17), d = n(192), f = n(285), m = n(332), v = 3, g = -1, y = 0, b = 1, T = 2, E = 50, S = o.createClass({
         displayName: "GameMap",
         getInitialState: function() {
             return {
