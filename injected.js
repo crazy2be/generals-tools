@@ -6,7 +6,28 @@ var COLORS = {
 
 var yourColor = null;
 // create an observer instance
+
+var scoreBoardObserver = new MutationObserver(function(mutations) {
+	mutations.forEach(function(mutation) {
+		//console.log("ScoreBoardObserver", mutation.target.parentNode.cellIndex, mutation.target.data, mutation);
+	});
+});
+
+function attachToScoreboard() {
+	console.log('loading scoreboard');
+	var map = document.getElementById('game-leaderboard')
+	var rows = map.getElementsByTagName('tr')
+	console.log(rows);
+
+	for (var i = 0; i < rows.length; i++) {
+		var target = rows[i];
+		var config = { subtree: true, childList: true, characterData: true };
+		scoreBoardObserver.observe(target, config);
+	}
+}
+
 var tileObserver = new MutationObserver(function(mutations) {
+	console.log("TileObserver", mutations);
 	mutations.forEach(function(mutation) {
 		var elt = mutation.target
 		var props = elt.className.split(' ')
@@ -94,44 +115,69 @@ var tileObserver = new MutationObserver(function(mutations) {
 	});
 });
 
+function attachToTiles() {
+	console.log('loading map')
+	var map = document.getElementById('map')
+	var tiles = map.getElementsByTagName('td')
+	console.log(tiles.length, tiles)
+
+	for (var i = 0; i < tiles.length; i++) {
+		var props = tiles[i].className.split(' ')
+		if (!props.includes('obstacle')) {
+			tiles[i].type = 'unexplored'
+			if (props.includes('fog')) {
+				tiles[i].style.opacity = '0.5'
+			}
+		} else {
+			tiles[i].type = 'obstacle'
+		}
+	}
+
+	for (var i = 0; i < tiles.length; i++) {
+		var target = tiles[i]
+		var config = { attributes: true };
+		tileObserver.observe(target, config);
+	}
+}
+
+function tryInit() {
+	var map = document.getElementById('map');
+	if (map === null) return;
+	var tiles = map.getElementsByTagName('td');
+	if (tiles.length === 0) {
+		// The first time we get init'd, there doesn't yet seem to be
+		// any tiles. So wait for a bit before trying to init.
+		setTimeout(tryInit, 100);
+	}
+
+	attachToScoreboard();
+	attachToTiles();
+	console.log("Watching game...");
+}
 
 var gameObserver = new MutationObserver(function(mutations) {
-	mutations.forEach(function(mutation) {
-		console.log(mutation)
-		if (mutation.addedNodes.length > 0 && mutation.addedNodes[0].id === 'game-page') {
+	mutations.forEach(function (mutation) {
+		console.log(mutation);
+		// N.B. The mutations are not necesarilly in the order you might
+		// expect. I suspect this is react's doing.
+		// I.e. if the main-menu is removed and replaced with the game-page,
+		// then you might get the addition first, followed by the removal.
+		// Hence, we just try to init any time a node is added.
+		if (mutation.addedNodes.length > 0) {
+			scoreBoardObserver.disconnect();
 			tileObserver.disconnect();
 
-			setTimeout(function() {
-				console.log('loading map')
-				var map = document.getElementById('map')
-				var tiles = map.getElementsByTagName('td')
-				console.log(tiles)
-
-				for (var i = 0; i < tiles.length; i++) {
-					var props = tiles[i].className.split(' ')
-					if (!props.includes('obstacle')) {
-						tiles[i].type = 'unexplored'
-						if (props.includes('fog')) {
-							tiles[i].style.opacity = '0.5'
-						}
-					} else {
-						tiles[i].type = 'obstacle'
-					}
-				}
-
-				for (var i = 0; i < tiles.length; i++) {
-					target = tiles[i]
-					var config = { attributes: true, childList: false, characterData: true };
-					tileObserver.observe(target, config);
-				}
-			}, 100)
-
+			tryInit();
 		}
-	})
+	});
 })
 
-var gameConfig = { attributes: true, childList: true, characterData: true }
+console.log("Running...");
+var gameConfig = { childList: true }
 var gameTarget = document.getElementById('react-container').children[0]
 
 console.log(gameTarget)
 gameObserver.observe(gameTarget, gameConfig)
+// On the replay page, for example, the game might already be there by
+// the time we load (hence we don't get changes).
+tryInit();

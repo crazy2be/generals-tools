@@ -846,7 +846,7 @@
 }, function(e, t) {
     "use strict";
     e.exports = {
-        VERSION: "15.0",
+        VERSION: "15.0.1",
         PLAYER_CAP: 8,
         PLAYER_COLORS: [ "red", "blue", "green", "purple", "teal", "darkgreen", "orange", "maroon" ],
         MAX_USERNAME_LENGTH: 18,
@@ -7469,7 +7469,6 @@
                     transform: "translateX(-55%)"
                 }
             }, r.createElement(A, {
-                id: "div-gpt-ad-1484365524244-0",
                 width: 728,
                 height: 90
             })), this.state.showGameModes ? r.createElement("div", {
@@ -8418,10 +8417,7 @@
     K.on("connect", function() {
         return Y ? void logger.log("Reconnected to websocket server.") : (logger.log("Connected to websocket server."), 
         Y = !0, i(), void K.emit("is_supporter", H, function(e) {
-            if (logger.log("Player is supporter: " + e), k.dispatch(R.setIsSupporter(e)), !e) {
-                var t = document.createElement("script");
-                t.src = "https://www.googletagservices.com/tag/js/gpt.js", t.async = "async", document.head.appendChild(t);
-            }
+            logger.log("Player is supporter: " + e), k.dispatch(R.setIsSupporter(e));
         }));
     }), K.on("disconnect", function() {
         logger.log("Disconnected from server."), k.getState().page !== B.PAGE_GAME || k.getState().game.isLocalGame || alert("Disconnected from server. Please refresh the page.");
@@ -13804,7 +13800,7 @@
                 }) : null), f ? o.createElement("td", null, o.createElement(u, {
                     text: l[h + 1],
                     inverted: m
-                }), p[h] ? o.createElement("br", null) : null, p[h + 1] ? o.createElement(s, {
+                }), p[h + 1] ? o.createElement("br", null) : null, p[h + 1] ? o.createElement(s, {
                     inverted: m
                 }) : null) : null, o.createElement("td", null, Math.max(0, Math.round(n || 0))));
             });
@@ -14116,7 +14112,7 @@
         },
         CLEAR: {
             desc: "Clear Queued Moves",
-            default: [ 81, 32 ]
+            default: [ 81 ]
         },
         ZOOMIN: {
             desc: "Zoom In",
@@ -14526,13 +14522,8 @@
     "use strict";
     var r = n(19), o = n(194), i = n(321), a = r.createClass({
         displayName: "Ad",
-        getInitialState: function() {
-            return {
-                useA4G: 728 === this.props.width && Math.random() < .5
-            };
-        },
         componentDidMount: function() {
-            if (this.props.is_supporter === !1 && this.renderAd(), !i.adBlockEnabled()) {
+            if (!i.adBlockEnabled()) {
                 var e = this;
                 this.rerenderTimeout = setTimeout(function() {
                     i.adBlockEnabled() && (logger.log("Re-rendering Ad element because adblock was detected late."), 
@@ -14542,24 +14533,6 @@
         },
         componentWillUnmount: function() {
             this.rerenderTimeout && clearTimeout(this.rerenderTimeout);
-        },
-        componentWillReceiveProps: function(e) {
-            this.props.is_supporter !== !1 && e.is_supporter === !1 && this.renderAd();
-        },
-        renderAd: function() {
-            if (this.state.useA4G) !function(e, t) {
-                var n = document.createElement("SCRIPT"), r = document.body, o = e + "/async-ajs.min.js", i = function(e, t) {
-                    for (var n = 0; n < e.length; n++) if (e[n].src === t) return !0;
-                    return !1;
-                }(document.getElementsByTagName("SCRIPT"), o);
-                i || (n.type = "text/javascript", n.async = !0, n.src = o, t && n.setAttribute("data-a4g-charset", t), 
-                r.appendChild(n));
-            }("https" === location.protocol ? "https://ad4game-a.akamaihd.net" : "http://cdn.ad4game.com", ""); else {
-                var e = this.props.id;
-                googletag.cmd.push(function() {
-                    googletag.display(e);
-                });
-            }
         },
         render: function() {
             if (this.props.is_supporter !== !1) return null;
@@ -14599,15 +14572,39 @@
                 className: "underline anim-white",
                 href: "/support",
                 target: "_blank"
-            }, "becoming a supporter"), "."))), i.adBlockEnabled() ? null : this.state.useA4G ? r.createElement("ins", {
-                "data-a4g-zone": 61324,
-                "data-a4g-block": !0,
-                "data-a4g-blockcampaign": !0,
-                className: "absolute-fill"
-            }) : r.createElement("div", {
-                id: this.props.id,
-                className: "absolute-fill"
-            }));
+            }, "becoming a supporter"), "."))), i.adBlockEnabled() ? null : 728 === this.props.width ? r.createElement("iframe", {
+                className: "absolute-fill",
+                src: "//ads.ad4game.com/www/delivery/afr.php?zoneid=61324",
+                frameBorder: "no",
+                scrolling: "no",
+                width: "728",
+                height: "90"
+            }, r.createElement("a", {
+                href: "//ads.ad4game.com/www/delivery/dck.php?n=ab0a96d7",
+                target: "_blank"
+            }, r.createElement("img", {
+                src: "//ads.ad4game.com/www/delivery/avw.php?zoneid=61324&n=ab0a96d7",
+                style: {
+                    border: 0
+                },
+                alt: ""
+            }))) : r.createElement("iframe", {
+                className: "absolute-fill",
+                src: "//ads.ad4game.com/www/delivery/afr.php?zoneid=61323&target=_blank",
+                frameBorder: "no",
+                scrolling: "no",
+                width: "300",
+                height: "250"
+            }, r.createElement("a", {
+                href: "//ads.ad4game.com/www/delivery/dck.php?n=a0664e1f",
+                target: "_blank"
+            }, r.createElement("img", {
+                src: "//ads.ad4game.com/www/delivery/avw.php?zoneid=61323&n=a0664e1f",
+                style: {
+                    border: 0
+                },
+                alt: ""
+            }))));
         }
     });
     e.exports = o.connect(function(e) {
@@ -14670,9 +14667,8 @@
                 className: "small",
                 onClick: this.props.onCancelClicked.bind(this)
             }, "Cancel"), r.createElement(p, {
-                id: "div-gpt-ad-1484365524244-1",
-                width: 336,
-                height: 280,
+                width: 300,
+                height: 250,
                 style: {
                     marginTop: "10px"
                 }
@@ -15306,9 +15302,9 @@
                 className: "fixed-center-horizontal"
             }, r.createElement("center", null, this.props.autoPlay ? r.createElement(m, {
                 tab_id: "replay-autoplay",
-                selectedTab: .5 === this.props.autoPlaySpeed ? 0 : 1 === this.props.autoPlaySpeed ? 1 : 2 === this.props.autoPlaySpeed ? 2 : 5 === this.props.autoPlaySpeed ? 3 : 10 == this.props.autoPlaySpeed ? 4 : 5,
-                onClicks: [ this.setAutoPlaySpeed.bind(null, .5), this.setAutoPlaySpeed.bind(null, 1), this.setAutoPlaySpeed.bind(null, 2), this.setAutoPlaySpeed.bind(null, 5), this.setAutoPlaySpeed.bind(null, 10), this.setAutoPlaySpeed.bind(null, 50) ],
-                titles: [ "0.5x", "1x", "2x", "5x", "10x", "50x" ]
+                selectedTab: .5 === this.props.autoPlaySpeed ? 0 : 1 === this.props.autoPlaySpeed ? 1 : 2 === this.props.autoPlaySpeed ? 2 : 5 === this.props.autoPlaySpeed ? 3 : 4,
+                onClicks: [ this.setAutoPlaySpeed.bind(null, .5), this.setAutoPlaySpeed.bind(null, 1), this.setAutoPlaySpeed.bind(null, 2), this.setAutoPlaySpeed.bind(null, 5), this.setAutoPlaySpeed.bind(null, 10) ],
+                titles: [ "0.5x", "1x", "2x", "5x", "10x" ]
             }) : null, this.props.autoPlay && !f ? r.createElement("br", null) : null, f ? null : r.createElement("div", {
                 id: "replay-bottom-bar",
                 className: "background"
@@ -15330,7 +15326,6 @@
                     fontSize: "12px"
                 }
             }, "Hide ad"), r.createElement(g, {
-                id: "div-gpt-ad-1484365524244-2",
                 width: 728,
                 height: 90
             })))) : null, this.props.isTutorial ? r.createElement(p, {
@@ -15491,9 +15486,6 @@
                         selectedIndex: o,
                         selectedIs50: !1
                     };
-					// TODO: DISABLE click to attack, it's annoying and nobody uses it.
-					// I thought you could just comment this out, but that turns out to
-					// disable *all* attacking. :/
                     if (n.isAdjacent(o, this.state.selectedIndex) && o !== this.state.selectedIndex) {
                         var a = this.state.selectedIndex;
                         s.attack(a, o, this.state.selectedIs50, this.state.attackIndex);
@@ -15853,33 +15845,6 @@
             });
         },
         renderRow: function(e) {
-			if (!window.armyHistory) window.armyHistory = [];
-			var ah = window.armyHistory[e.i];
-			if (!ah) { ah = window.armyHistory[e.i] = {off: 0, prev: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}; }
-			if (e.total <= ah.prev[ah.off]) {
-				//console.log("Equal");
-				// Ignore drops, they aren't usful for measuring gen capacity.
-			} else {
-				ah.off = (ah.off + 1) % ah.prev.length;
-				ah.prev[ah.off] = e.total;
-			}
-
-			var diffs = [];
-			for (var iii = 1 /* nb */; iii < ah.prev.length; iii++) {
-				// diffs is one less than ah.prev length
-				diffs[iii - 1] = ah.prev[(iii + ah.off + 1) % ah.prev.length] -
-								 ah.prev[(iii + ah.off) % ah.prev.length];
-			}
-			var mostCommon = [];
-			for (var iii = 0; iii < diffs.length; iii++) {
-				mostCommon[diffs[iii]] = (mostCommon[diffs[iii]] || 0) + 1;
-			}
-			for (var iii = 0; iii < mostCommon.length; iii++) {
-				mostCommon[iii] = mostCommon[iii] || 0;
-			}
-			var generatorGuess = mostCommon.indexOf(Math.max(...mostCommon)) || 1 /* 0 is impossible */;
-			//console.log("Based on diffs:", diffs, "most likely seems", generatorGuess);
-
             var t = this.props.usernames[e.i] || "Anonymous", n = this.props.stars ? this.props.stars[e.i] : "", a = this.props.teams ? this.props.teams[e.i] : void 0;
             return this.state.minimized && (t = " "), r.createElement("tr", {
                 className: 0 === e.tiles ? "dead" : e.dead ? "afk" : "",
@@ -15897,14 +15862,14 @@
                 key: "game-leaderboard-score" + e.i
             }, e.total), r.createElement("td", {
                 key: "game-leaderboard-tiles" + e.i
-            }, e.tiles), r.createElement("td", null, '' + generatorGuess));
+            }, e.tiles));
         },
         render: function() {
             if (this.props.scores) var e = this.props.scores.map(this.renderRow);
             return r.createElement("table", {
                 id: "game-leaderboard",
                 onClick: this.toggleMinimize
-            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land"), r.createElement("td", null, "Gen")), e));
+            }, r.createElement("tbody", null, r.createElement("tr", null, this.showTeamsInLeaderboard && !this.state.minimized ? r.createElement("td", null, "Team") : null, this.state.minimized ? null : r.createElement("td", null, " ", r.createElement(o, null), " "), this.state.minimized ? r.createElement("td", null, " ") : r.createElement("td", null, "Player"), r.createElement("td", null, "Army"), r.createElement("td", null, "Land")), e));
         }
     });
     e.exports = u;
