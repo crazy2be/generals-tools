@@ -846,7 +846,7 @@
 }, function(e, t) {
     "use strict";
     e.exports = {
-        VERSION: "15.1.5",
+        VERSION: "15.3.2",
         PLAYER_CAP: 8,
         PLAYER_COLORS: [ "red", "blue", "green", "purple", "teal", "darkgreen", "orange", "maroon" ],
         MAX_USERNAME_LENGTH: 18,
@@ -8275,208 +8275,216 @@
         notifyServerRestart: c
     };
 }, function(e, t, n) {
-    "use strict";
-    function r() {
-        var e = parseInt(D.games_played) || 0;
-        D.games_played = e + 1;
-    }
-    function o() {
-        return K.connected;
-    }
-    function i() {
-        K.emit("stars_and_rank", H);
-    }
-    function a(e, t) {
-        K.emit("set_username", H, e, U.NBK), K.once("error_set_username", t);
-    }
-    function s() {
-        K.emit("play", H, U.NBK);
-    }
-    function l() {
-        K.emit("join_1v1", H, U.NBK);
-    }
-    function u(e) {
-        K.emit("join_private", e, H, U.NBK);
-    }
-    function c(e, t) {
-        K.emit("set_custom_team", e, t);
-    }
-    function p(e, t) {
-        K.emit("set_custom_options", e, t);
-    }
-    function h(e, t, n, r) {
-        k.getState().game.isLocalGame ? L.handleAttack(e, t, n, r) : K.emit("attack", e, t, n, r);
-    }
-    function d(e) {
-        K.emit("ping_tile", e), k.dispatch(N.cleanPings(e)), k.dispatch(N.pingTile(e));
-    }
-    function f() {
-        K.emit("cancel", k.getState().queue.queue_id);
-    }
-    function m(e) {
-        K.emit("set_force_start", k.getState().queue.queue_id, e);
-    }
-    function g(e, t, n) {
-        K.emit("chat_message", e, t, n);
-    }
-    function v(e) {
-        K.emit("leaderboard", e);
-    }
-    function y() {
-        K.emit("get_2v2_teammates", H);
-    }
-    function b() {
-        K.emit("leave_game");
-    }
-    function T() {
-        k.getState().game.isLocalGame ? L.handleUndoMove() : K.emit("undo_move");
-    }
-    function E() {
-        k.getState().game.isLocalGame ? L.handleClearMoves() : K.emit("clear_moves");
-    }
-    function S(e, t) {
-        var n = new XMLHttpRequest();
-        n.open("GET", "/" + e + ".gior"), n.responseType = "arraybuffer", n.onload = function() {
-            t(n.response ? new Uint8Array(n.response) : null);
-        }, n.send();
-    }
-    function A(e) {
-        K.emit("replay_list", {
-            user_id: H,
-            max_time: e
-        });
-    }
-    function C(e) {
-        K.emit("join_team", e, H, U.NBK);
-    }
-    function _(e) {
-        K.emit("leave_team", e);
-    }
-    function P(e, t) {
-        K.emit("link_email", H, e, t);
-    }
-    function w(e, t) {
-        K.emit("recover_account", e, t);
-    }
-    var M = n(226), k = n(279), x = n(224), N = n(283), I = n(281), O = n(295), R = n(297), D = n(285), B = n(191), L = n(298), G = n(288), U = n(17), H = n(316);
-    try {
-        if (D.hasOwnProperty("stars")) {
-            console.group("Found Cached Stars");
-            for (var F = JSON.parse(D.stars), j = Object.keys(F), V = 0; V < j.length; V++) logger.log(j[V] + ": " + F[j[V]]);
-            console.groupEnd(), k.dispatch(x.stars(F));
+    (function(t) {
+        "use strict";
+        function r() {
+            var e = parseInt(D.games_played) || 0;
+            D.games_played = e + 1;
         }
-        if (D.hasOwnProperty("rank")) {
-            console.group("Found Cached Rank");
-            for (var W = JSON.parse(D.rank), j = Object.keys(W), V = 0; V < j.length; V++) logger.log(j[V] + ": " + W[j[V]]);
-            console.groupEnd(), k.dispatch(x.rank(W));
+        function o() {
+            return K.connected;
         }
-    } catch (e) {
-        k.dispatch(x.stars({})), k.dispatch(x.rank({}));
-    }
-    var q = window.location.hostname;
-    switch (q) {
-      case "localhost":
-        q = "//localhost:8080";
-        break;
+        function i() {
+            K.emit("stars_and_rank", H);
+        }
+        function a(e, t) {
+            K.emit("set_username", H, e, U.NBK), K.once("error_set_username", t);
+        }
+        function s() {
+            K.emit("play", H, U.NBK);
+        }
+        function l() {
+            K.emit("join_1v1", H, U.NBK);
+        }
+        function u(e) {
+            K.emit("join_private", e, H, U.NBK);
+        }
+        function c(e, t) {
+            K.emit("set_custom_team", e, t);
+        }
+        function p(e, t) {
+            K.emit("set_custom_options", e, t);
+        }
+        function h(e, t, n, r) {
+            k.getState().game.isLocalGame ? L.handleAttack(e, t, n, r) : K.emit("attack", e, t, n, r);
+        }
+        function d(e) {
+            K.emit("ping_tile", e), k.dispatch(N.cleanPings(e)), k.dispatch(N.pingTile(e));
+        }
+        function f() {
+            K.emit("cancel");
+        }
+        function m(e) {
+            K.emit("set_force_start", k.getState().queue.queue_id, e);
+        }
+        function g(e, t, n) {
+            K.emit("chat_message", e, t, n);
+        }
+        function v(e) {
+            K.emit("leaderboard", e);
+        }
+        function y() {
+            K.emit("get_2v2_teammates", H);
+        }
+        function b() {
+            K.emit("leave_game");
+        }
+        function T() {
+            k.getState().game.isLocalGame ? L.handleUndoMove() : K.emit("undo_move");
+        }
+        function E() {
+            k.getState().game.isLocalGame ? L.handleClearMoves() : K.emit("clear_moves");
+        }
+        function S(e, t) {
+            var n = new XMLHttpRequest();
+            n.open("GET", "/" + e + ".gior"), n.responseType = "arraybuffer", n.onload = function() {
+                t(n.response ? new Uint8Array(n.response) : null);
+            }, n.send();
+        }
+        function A(e) {
+            K.emit("replay_list", {
+                user_id: H,
+                max_time: e
+            });
+        }
+        function C(e) {
+            K.emit("join_team", e, H, U.NBK);
+        }
+        function _(e) {
+            K.emit("leave_team", e);
+        }
+        function P(e, t) {
+            K.emit("link_email", H, e, t);
+        }
+        function w(e, t) {
+            K.emit("recover_account", e, t);
+        }
+        var M = n(226), k = n(279), x = n(224), N = n(283), I = n(281), O = n(295), R = n(297), D = n(285), B = n(191), L = n(298), G = n(288), U = n(17), H = n(316);
+        try {
+            if (D.hasOwnProperty("stars")) {
+                console.group("Found Cached Stars");
+                for (var F = JSON.parse(D.stars), j = Object.keys(F), V = 0; V < j.length; V++) logger.log(j[V] + ": " + F[j[V]]);
+                console.groupEnd(), k.dispatch(x.stars(F));
+            }
+            if (D.hasOwnProperty("rank")) {
+                console.group("Found Cached Rank");
+                for (var W = JSON.parse(D.rank), j = Object.keys(W), V = 0; V < j.length; V++) logger.log(j[V] + ": " + W[j[V]]);
+                console.groupEnd(), k.dispatch(x.rank(W));
+            }
+        } catch (e) {
+            k.dispatch(x.stars({})), k.dispatch(x.rank({}));
+        }
+        var q = window.location.hostname;
+        switch (q) {
+          case "localhost":
+            q = "//localhost:8080";
+            break;
 
-      case "generals.io":
-        q = "//ws.generals.io";
-        break;
+          case "generals.io":
+            q = "//ws.generals.io";
+            break;
 
-      case "eu.generals.io":
-        q = "//euws.generals.io";
-        break;
+          case "eu.generals.io":
+            q = "//euws.generals.io";
+            break;
 
-      case "bot.generals.io":
-        q = "//botws.generals.io";
-    }
-    var K = M(q), Y = !1;
-    K.on("connect", function() {
-        return Y ? void logger.log("Reconnected to websocket server.") : (logger.log("Connected to websocket server."), 
-        Y = !0, i(), D.GIO_CACHED_USERNAME && k.dispatch(R.setUsername(D.GIO_CACHED_USERNAME)), 
-        K.emit("get_username", H, function(e) {
-            console.log("username: " + e), e && (k.dispatch(R.setUsername(e)), D.GIO_CACHED_USERNAME = e);
-        }), void K.emit("is_supporter", H, function(e) {
-            logger.log("Player is supporter: " + e), k.dispatch(R.setIsSupporter(e));
-        }));
-    }), K.on("disconnect", function() {
-        logger.log("Disconnected from server."), k.getState().page !== B.PAGE_GAME || k.getState().game.isLocalGame || alert("Disconnected from server. Please refresh the page.");
-    }), K.on("pre_game_start", function() {
-        k.dispatch(N.prestart());
-    }), K.on("game_start", function(e) {
-        k.dispatch(N.start(e));
-    }), K.on("game_update", function(e) {
-        k.dispatch(N.update(e));
-    }), K.on("game_over", function() {
-        k.dispatch(N.end());
-    }), K.on("ping_tile", function(e) {
-        k.dispatch(N.pingTile(e));
-    }), K.on("queue_update", function(e) {
-        k.dispatch(I.update(e));
-    }), K.on("team_update", function(e) {
-        k.dispatch(I.update({
-            numPlayers: e
-        }));
-    }), K.on("team_joined_queue", function() {
-        G.changeURL("/"), k.dispatch(x.play("2v2"));
-    }), K.on("removed_from_queue", function() {
-        k.dispatch(I.removeFrom2v2());
-    }), K.on("chat_message", function(e, t) {
-        k.dispatch(O.receiveMessage(e, t));
-    }), K.on("game_lost", function(e) {
-        r(), k.dispatch(N.lose(e));
-    }), K.on("game_won", function(e) {
-        r(), k.dispatch(N.win(e));
-    }), K.on("replay_list", function(e) {
-        k.dispatch(x.receiveReplayList(e));
-    }), K.on("server_down", function() {
-        window.location.reload(!1);
-    }), K.on("leaderboard", function(e) {
-        D["leaderboard:" + e.ladder] = JSON.stringify(e), k.dispatch(x.leaderboard(e));
-    }), K.on("2v2_teammates", function(e) {
-        D["2v2_teammates"] = JSON.stringify(e), k.dispatch(x.set2v2Teammates(e));
-    }), K.on("stars", function(e) {
-        logger.log('Updated stars on ladder "' + Object.keys(e)[0] + '" to ' + e[Object.keys(e)[0]]), 
-        k.dispatch(x.stars(e));
-    }), K.on("rank", function(e) {
-        logger.log('Updated rank on ladder "' + Object.keys(e)[0] + '" to ' + e[Object.keys(e)[0]]), 
-        k.dispatch(x.rank(e));
-    }), K.on("error_user_id", function() {
-        k.dispatch(I.cancel()), alert("You are already using this account! Make sure you don't have multiple tabs with generals.io open.\n\nIf you believe you are seeing this message in error, please email us at generalsiogame@gmail.com.");
-    }), K.on("error_queue_full", function() {
-        k.dispatch(I.cancel()), alert("This game is already full.");
-    }), K.on("error_banned", function() {
-        alert("Your IP address was temporarily banned by the server for spamming. Please try again in 1 minute (DO NOT refresh the page until then). If this doesn't go away, contact us at generalsiogame@gmail.com");
-    }), K.on("error_refresh", function() {
-        alert("An error occurred - refresh the page several times in a row quickly and then try again. If that doesn't work, please contact us at generalsiogame@gmail.com.");
-    }), K.on("server_restart", function() {
-        k.dispatch(x.notifyServerRestart());
-    }), e.exports = {
-        isConnected: o,
-        updateStarsAndRank: i,
-        setUsername: a,
-        play: s,
-        play1v1: l,
-        playPrivate: u,
-        setCustomTeam: c,
-        setCustomOptions: p,
-        attack: h,
-        pingTile: d,
-        cancel: f,
-        setForceStart: m,
-        sendChatMessage: g,
-        getLeaderboard: v,
-        get2v2Teammates: y,
-        leaveGame: b,
-        undoMove: T,
-        clearMoves: E,
-        getReplay: S,
-        getReplayList: A,
-        joinTeam: C,
-        leaveTeam: _,
-        linkEmail: P,
-        recoverAccount: w
-    };
+          case "bot.generals.io":
+            q = "//botws.generals.io";
+        }
+        var K = M(q);
+        t.socket = K;
+        var Y = !1;
+        K.on("connect", function() {
+            return Y ? void logger.log("Reconnected to websocket server.") : (logger.log("Connected to websocket server."), 
+            Y = !0, i(), D.GIO_CACHED_USERNAME && k.dispatch(R.setUsername(D.GIO_CACHED_USERNAME)), 
+            K.emit("get_username", H, function(e) {
+                console.log("username: " + e), e && (k.dispatch(R.setUsername(e)), D.GIO_CACHED_USERNAME = e);
+            }), void K.emit("is_supporter", H, function(e) {
+                logger.log("Player is supporter: " + e), k.dispatch(R.setIsSupporter(e));
+            }));
+        }), K.on("disconnect", function() {
+            logger.log("Disconnected from server."), k.getState().page !== B.PAGE_GAME || k.getState().game.isLocalGame || alert("Disconnected from server. Please refresh the page.");
+        }), K.on("pre_game_start", function() {
+            k.dispatch(N.prestart());
+        }), K.on("game_start", function(e) {
+            k.dispatch(N.start(e));
+        }), K.on("game_update", function(e) {
+            k.dispatch(N.update(e));
+        }), K.on("game_over", function() {
+            k.dispatch(N.end());
+        }), K.on("ping_tile", function(e) {
+            k.dispatch(N.pingTile(e));
+        }), K.on("queue_update", function(e) {
+            k.dispatch(I.update(e));
+        }), K.on("team_update", function(e) {
+            k.dispatch(I.update({
+                numPlayers: e
+            }));
+        }), K.on("team_joined_queue", function() {
+            G.changeURL("/"), k.dispatch(x.play("2v2"));
+        }), K.on("removed_from_queue", function() {
+            k.dispatch(I.removeFrom2v2());
+        }), K.on("chat_message", function(e, t) {
+            k.dispatch(O.receiveMessage(e, t));
+        }), K.on("game_lost", function(e) {
+            r(), k.dispatch(N.lose(e));
+        }), K.on("game_won", function(e) {
+            r(), k.dispatch(N.win(e));
+        }), K.on("replay_list", function(e) {
+            k.dispatch(x.receiveReplayList(e));
+        }), K.on("server_down", function() {
+            window.location.reload(!1);
+        }), K.on("leaderboard", function(e) {
+            D["leaderboard:" + e.ladder] = JSON.stringify(e), k.dispatch(x.leaderboard(e));
+        }), K.on("2v2_teammates", function(e) {
+            D["2v2_teammates"] = JSON.stringify(e), k.dispatch(x.set2v2Teammates(e));
+        }), K.on("stars", function(e) {
+            logger.log('Updated stars on ladder "' + Object.keys(e)[0] + '" to ' + e[Object.keys(e)[0]]), 
+            k.dispatch(x.stars(e));
+        }), K.on("rank", function(e) {
+            logger.log('Updated rank on ladder "' + Object.keys(e)[0] + '" to ' + e[Object.keys(e)[0]]), 
+            k.dispatch(x.rank(e));
+        }), K.on("error_user_id", function() {
+            k.dispatch(I.cancel()), alert("You are already using this account! Make sure you don't have multiple tabs with generals.io open.\n\nIf you believe you are seeing this message in error, please email us at generalsiogame@gmail.com.");
+        }), K.on("error_queue_full", function() {
+            k.dispatch(I.cancel()), alert("This game is already full.");
+        }), K.on("error_banned", function() {
+            alert("You were temporarily banned by the server because you or someone else on your network was spamming.\nPlease try again in 1 minute (DO NOT refresh the page until then). If this doesn't go away, contact us at generalsiogame@gmail.com");
+        }), K.on("error_refresh", function() {
+            alert("An error occurred - refresh the page several times in a row quickly and then try again. If that doesn't work, please contact us at generalsiogame@gmail.com.");
+        }), K.on("error_join_queue", function() {
+            alert("An error occurred - refresh the page and try again.");
+        }), K.on("server_restart", function() {
+            k.dispatch(x.notifyServerRestart());
+        }), e.exports = {
+            isConnected: o,
+            updateStarsAndRank: i,
+            setUsername: a,
+            play: s,
+            play1v1: l,
+            playPrivate: u,
+            setCustomTeam: c,
+            setCustomOptions: p,
+            attack: h,
+            pingTile: d,
+            cancel: f,
+            setForceStart: m,
+            sendChatMessage: g,
+            getLeaderboard: v,
+            get2v2Teammates: y,
+            leaveGame: b,
+            undoMove: T,
+            clearMoves: E,
+            getReplay: S,
+            getReplayList: A,
+            joinTeam: C,
+            leaveTeam: _,
+            linkEmail: P,
+            recoverAccount: w
+        };
+    }).call(t, function() {
+        return this;
+    }());
 }, function(e, t, n) {
     function r(e, t) {
         "object" == typeof e && (t = e, e = void 0), t = t || {};
