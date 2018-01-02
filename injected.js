@@ -62,11 +62,8 @@ var tileObserver = new MutationObserver(function(mutations) {
 		// 	elt.className = elt.className.replace(/\bfog\b/,elt.clr)
 		// }
 
-		if (!props.includes('obstacle') && elt.type === 'unexplored') {
-			elt.wasUnexploredEmpty = true;
-		}
 		// someone's general got taken or died
-		if (elt.wasUnexploredEmpty && props.includes('obstacle') && elt.type === 'unexplored') {
+		if (props.includes('obstacle') && elt.type === 'unexplored') {
 			elt.type = 'general'
 			elt.style.border = '1px solid white'
 			elt.pastGen = true;
